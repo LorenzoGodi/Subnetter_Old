@@ -10,7 +10,7 @@ namespace Subnetter.SubnetterEngine.Operators
     {
         public static string AddressBinToInt(string address)
         {
-            string[] _parts = address.Split(".");
+            string[] _parts = address.Split('.');
             int[] parts = new int[4];
 
             for (int v = 0; v < 4; v++)
@@ -21,7 +21,7 @@ namespace Subnetter.SubnetterEngine.Operators
 
         public static string AddressIntToBin(string address)
         {
-            string[] _parts = address.Split(".");
+            string[] _parts = address.Split('.');
             int[] parts = new int[4];
 
             for (int v = 0; v < 4; v++)

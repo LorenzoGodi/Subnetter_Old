@@ -36,12 +36,17 @@ namespace Subnetter.SubnetterEngine.Operators
             string valid = "10.";
             bool ok = true;
 
-            if (ok = (!string.IsNullOrEmpty(addr)) && addr.Contains(".") && addr.Split(".").Length == 3)
+            if (ok = (!string.IsNullOrEmpty(addr)) && addr.Contains(".") && addr.Split('.').Length == 4)
             {
                 foreach (char chr in addr)
                     ok = valid.Contains(chr) ? ok : false;
 
-                foreach (string str in addr.Split("."))
+                foreach (string str in addr.Split('.'))
+                {
+                    ok = str.Length == 8 ? ok : false;
+                }
+
+                foreach (string str in addr.Split('.'))
                 {
                     ok = _IsValidAddressNumber(Convert.ToInt32(str, 2).ToString()) ? ok : false;
                 }
@@ -55,12 +60,12 @@ namespace Subnetter.SubnetterEngine.Operators
             string valid = "1234567890.";
             bool ok = true;
 
-            if (ok = (!string.IsNullOrEmpty(addr)) && addr.Contains(".") && addr.Split(".").Length == 3)
+            if (ok = (!string.IsNullOrEmpty(addr)) && addr.Contains(".") && addr.Split('.').Length == 4)
             {
                 foreach (char chr in addr)
                     ok = valid.Contains(chr) ? ok : false;
 
-                foreach (string str in addr.Split("."))
+                foreach (string str in addr.Split('.'))
                 {
                     ok = _IsValidAddressNumber(str) ? ok : false;
                 }
@@ -95,7 +100,7 @@ namespace Subnetter.SubnetterEngine.Operators
 
         private static bool _IsValidAddressNumber(string number)
         {
-            for (int v = 1; v <= 255; v++)
+            for (int v = 0; v <= 255; v++)
                 if (number == v.ToString())
                     return true;
             return false;
