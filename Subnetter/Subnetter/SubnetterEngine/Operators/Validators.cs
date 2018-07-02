@@ -17,16 +17,16 @@ namespace Subnetter.SubnetterEngine.Operators
                     return _IsValidAddressBin(address);
 
                 case AddressType.BinarySubnetmask:
-                    break;
+                    return _IsValidSubnetmaskBin(address);
 
                 case AddressType.IntegerAddress:
                     return _IsValidAddressInt(address);
 
                 case AddressType.IntegerSubnetmusk:
-                    break;
+                    return _IsValidSubnetmaskInt(address);
             }
 
-            return false;
+            throw new Exception("Errore Impossibile");
         }
 
         //
@@ -95,7 +95,7 @@ namespace Subnetter.SubnetterEngine.Operators
 
         private static string _Reduce(string str)
         {
-            return str.Replace("00", "0").Replace("11", "1");
+            return str.Replace("00", "0").Replace("11", "1").Replace(".", "");
         }
 
         private static bool _IsValidAddressNumber(string number)

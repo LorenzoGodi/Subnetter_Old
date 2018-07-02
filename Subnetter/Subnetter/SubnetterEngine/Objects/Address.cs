@@ -9,29 +9,29 @@ namespace Subnetter.SubnetterEngine.Objects
 {
     class Address
     {
-        public Address(string addr)
-        {
-            if(Validators.IsValidAddress(addr))
-            {
+        //public Address(string addr)
+        //{
+        //    if(Validators.IsValidAddress(addr))
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
-        //
+        ////
 
-        public static string ToStringInt()
-        {
+        //public static string ToStringInt()
+        //{
 
-        }
+        //}
 
-        public static string ToStringBin()
-        {
+        //public static string ToStringBin()
+        //{
 
-        }
+        //}
 
-        public static Address ConvertToAddress(string addr)
-        {
+        //public static Address ConvertToAddress(string addr)
+        //{
 
-        }
+        //}
     }
 }
