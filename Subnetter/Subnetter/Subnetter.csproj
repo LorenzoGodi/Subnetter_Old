@@ -101,6 +101,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubnetterEngine\Enums.cs" />
     <Compile Include="SubnetterEngine\Objects\Address.cs" />
+    <Compile Include="SubnetterEngine\Operators\AI.cs" />
     <Compile Include="SubnetterEngine\Operators\Converters.cs" />
     <Compile Include="SubnetterEngine\Operators\Validators.cs" />
   </ItemGroup>

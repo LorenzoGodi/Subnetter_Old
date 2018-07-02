@@ -9,24 +9,56 @@ namespace Subnetter.SubnetterEngine.Operators
 {
     class Validators
     {
-        public static bool IsValidAddress(string address, AddressType type)
+        public static bool IsValidAddress(string address, AddressType type, AddressStructure structure)
         {
-            switch (type)
+            if (type == AddressType.NetworkAddress)
             {
-                case AddressType.BinaryAddress:
-                    return _IsValidAddressBin(address);
-
-                case AddressType.BinarySubnetmask:
-                    return _IsValidSubnetmaskBin(address);
-
-                case AddressType.IntegerAddress:
+                if (structure == AddressStructure.IntegerAddress)
                     return _IsValidAddressInt(address);
-
-                case AddressType.IntegerSubnetmusk:
-                    return _IsValidSubnetmaskInt(address);
+                else
+                    return _IsValidAddressBin(address);
             }
+            else
+            {
+                if (structure == AddressStructure.IntegerAddress)
+                    return _IsValidSubnetmaskInt(address);
+                else
+                    return _IsValidSubnetmaskBin(address);
+            }
+        }
 
-            throw new Exception("Errore Impossibile");
+        public static AddressStructure DetermineAddressStructure(string address)
+        {
+            try
+            {
+                if (_IsValidAddressInt(address))
+                    return AddressStructure.IntegerAddress;
+                else if (_IsValidAddressBin(address))
+                    return AddressStructure.BinaryAddress;
+                else
+                    throw null;
+            }
+            catch
+            {
+                throw new Exception("Indirizzo non valido");
+            }
+        }
+
+        public static AddressStructure DetermineSubnetmaskStructure(string address)
+        {
+            try
+            {
+                if (_IsValidSubnetmaskInt(address))
+                    return AddressStructure.IntegerAddress;
+                else if (_IsValidSubnetmaskBin(address))
+                    return AddressStructure.BinaryAddress;
+                else
+                    throw null;
+            }
+            catch
+            {
+                throw new Exception("Indirizzo di subnetmask non valido");
+            }
         }
 
         //

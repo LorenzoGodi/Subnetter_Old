@@ -6,5 +6,7 @@ using System.Threading.Tasks;
 
 namespace Subnetter.SubnetterEngine
 {
-    public enum AddressType { BinaryAddress, IntegerAddress, BinarySubnetmask, IntegerSubnetmusk }
+    public enum AddressType { NetworkAddress, SubnetmaskAddress }
+    public enum AddressStructure { BinaryAddress, IntegerAddress }
+    public enum AddressRole { Network, Host, Broadcast }
 }

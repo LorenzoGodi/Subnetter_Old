@@ -9,29 +9,38 @@ namespace Subnetter.SubnetterEngine.Objects
 {
     class Address
     {
-        //public Address(string addr)
-        //{
-        //    if(Validators.IsValidAddress(addr))
-        //    {
+        public string BinaryAddress { get; private set; }
+        public string BinarySubnetmask { get; private set; }
+        public string IntegerAddress { get; private set; }
+        public string IntegerSubnetmask { get; private set; }
 
-        //    }
-        //}
+        public AddressRole AddressRole { get; private set; }
 
-        ////
+        //
 
-        //public static string ToStringInt()
-        //{
+        public Address(string address, string subnetmask)
+        {
+            if (Validators.DetermineAddressStructure(address) == AddressStructure.IntegerAddress)
+            {
+                IntegerAddress = address;
+                BinaryAddress = Converters.AddressIntToBin(address);
+            }
+            else
+            {
+                BinaryAddress = address;
+                IntegerAddress = Converters.AddressBinToInt(address);
+            }
 
-        //}
-
-        //public static string ToStringBin()
-        //{
-
-        //}
-
-        //public static Address ConvertToAddress(string addr)
-        //{
-
-        //}
+            if (Validators.DetermineSubnetmaskStructure(subnetmask) == AddressStructure.IntegerAddress)
+            {
+                IntegerSubnetmask = subnetmask;
+                BinarySubnetmask = Converters.AddressIntToBin(subnetmask);
+            }
+            else
+            {
+                BinarySubnetmask = subnetmask;
+                IntegerSubnetmask = Converters.AddressBinToInt(subnetmask);
+            }
+        }
     }
 }
