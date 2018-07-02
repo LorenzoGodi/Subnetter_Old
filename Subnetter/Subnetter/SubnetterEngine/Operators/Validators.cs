@@ -52,12 +52,12 @@ namespace Subnetter.SubnetterEngine.Operators
                 foreach (char chr in addr)
                     ok = valid.Contains(chr) ? ok : false;
 
-                foreach (string str in addr.Split('.'))
+                foreach (string str in Formatters.Divide(addr))
                 {
                     ok = str.Length == 8 ? ok : false;
                 }
 
-                foreach (string str in addr.Split('.'))
+                foreach (string str in Formatters.Divide(addr))
                 {
                     ok = _IsValidAddressNumber(Convert.ToInt32(str, 2).ToString()) ? ok : false;
                 }
@@ -76,7 +76,7 @@ namespace Subnetter.SubnetterEngine.Operators
                 foreach (char chr in addr)
                     ok = valid.Contains(chr) ? ok : false;
 
-                foreach (string str in addr.Split('.'))
+                foreach (string str in Formatters.Divide(addr))
                 {
                     ok = _IsValidAddressNumber(str) ? ok : false;
                 }

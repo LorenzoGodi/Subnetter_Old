@@ -66,7 +66,7 @@ namespace Subnetter
                     // Quando lo stack di esplorazione non viene ripristinato, passare alla prima pagina
                     // e configurare la nuova pagina passando le informazioni richieste come parametro
                     // parametro
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(Classes.AppData.SavedData), e.Arguments);
                 }
                 // Assicurarsi che la finestra corrente sia attiva
                 Window.Current.Activate();

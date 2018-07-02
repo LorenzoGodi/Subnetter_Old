@@ -12,7 +12,7 @@ namespace Subnetter.SubnetterEngine.Operators
         {
             address = Converters.AddressToBin(address);
             if(address == "11111111.11111111.11111111.11111111") { throw new Exception("Non incrementabile"); }
-            address = address.Replace(".", "");
+            address = Formatters.RemovePoints(address);
             //
             int temp = address.Length;
             while (address[address.Length - 1] == 1)
@@ -24,7 +24,7 @@ namespace Subnetter.SubnetterEngine.Operators
             while (address.Length < temp)
                 address = address + "0";
             //
-            address = address.Substring(0, 8) + "." + address.Substring(8, 8) + "." + address.Substring(16, 8) + "." + address.Substring(24, 8);
+            address = Formatters.AddPoints(address);
             return address;
         }
 
@@ -32,7 +32,7 @@ namespace Subnetter.SubnetterEngine.Operators
         {
             address = Converters.AddressToBin(address);
             if (address == "00000000.00000000.00000000.00000000") { throw new Exception("Non decrementabile"); }
-            address = address.Replace(".", "");
+            address = Formatters.RemovePoints(address);
             //
             int temp = address.Length;
             while (address[address.Length - 1] == 0)
@@ -44,7 +44,7 @@ namespace Subnetter.SubnetterEngine.Operators
             while (address.Length < temp)
                 address = address + "1";
             //
-            address = address.Substring(0, 8) + "." + address.Substring(8, 8) + "." + address.Substring(16, 8) + "." + address.Substring(24, 8);
+            address = Formatters.AddPoints(address);
             return address;
         }
     }

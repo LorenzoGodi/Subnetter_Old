@@ -10,18 +10,18 @@ namespace Subnetter.SubnetterEngine.Operators
     {
         public static string AddressBinToInt(string address)
         {
-            string[] _parts = address.Split('.');
+            string[] _parts = Formatters.Divide(address);
             int[] parts = new int[4];
 
             for (int v = 0; v < 4; v++)
                 parts[v] = Convert.ToInt32(_parts[v]);
 
-            return parts[0] + "." + parts[1] + "." + parts[2] + "." + parts[3];
+            return Formatters.Merge(parts);
         }
 
         public static string AddressIntToBin(string address)
         {
-            string[] _parts = address.Split('.');
+            string[] _parts = Formatters.Divide(address);
             string[] parts = new string[4];
 
             for (int v = 0; v < 4; v++)
@@ -31,7 +31,7 @@ namespace Subnetter.SubnetterEngine.Operators
                 while (parts[v].Length < 8)
                     parts[v] = "0" + parts[v];
 
-            string result = parts[0] + "." + parts[1] + "." + parts[2] + "." + parts[3];
+            string result = Formatters.Merge(parts);
             if (result.Length != 35) { throw new Exception("Errore interno del codice - lunghezza della Subnetmask binaria non valida!"); }
 
             return result;

@@ -9,10 +9,11 @@ namespace Subnetter.SubnetterEngine.Objects
 {
     class NetworkAddress
     {
-        public string BinaryAddress { get; private set; }
         public string BinarySubnetmask { get; private set; }
-        public string IntegerAddress { get; private set; }
         public string IntegerSubnetmask { get; private set; }
+
+        public string BinaryAddress { get; private set; }
+        public string IntegerAddress { get; private set; }
 
         //
 
