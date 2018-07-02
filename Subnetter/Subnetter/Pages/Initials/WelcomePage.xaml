@@ -8,7 +8,29 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
-    </Grid>
+    <RelativePanel Padding="50" Background="#202020">
+        <StackPanel Orientation="Horizontal">
+            <Grid Background="#D50000" Padding="5,2,5,2">
+                <TextBlock Text="11100110" Foreground="White"/>
+            </Grid>
+            <Grid Padding="5,2,5,2">
+                <TextBlock Text="." Foreground="Black"/>
+            </Grid>
+            <Grid Margin="0,0,8,0" Background="#0D47A1" Padding="5,2,5,2">
+                <TextBlock Text="10" Foreground="White"/>
+            </Grid>
+            <Grid Margin="0,0,8,0"  Background="#0D47A1" Padding="5,2,5,2">
+                <TextBlock Text="11" Foreground="White"/>
+            </Grid>
+            <Grid Background="#0D47A1" Padding="5,2,5,2">
+                <TextBlock Text="0110" Foreground="White"/>
+            </Grid>
+            <Grid Padding="5,2,5,2">
+                <TextBlock Text="." Foreground="White"/>
+            </Grid>
+            <Grid Background="#388E3C" Padding="5,2,5,2">
+                <TextBlock Text="11100110 . 00000000" Foreground="White"/>
+            </Grid>
+        </StackPanel>
+    </RelativePanel>
 </Page>
