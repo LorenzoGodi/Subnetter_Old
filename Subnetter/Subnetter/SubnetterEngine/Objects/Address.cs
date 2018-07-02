@@ -7,20 +7,18 @@ using Subnetter.SubnetterEngine.Operators;
 
 namespace Subnetter.SubnetterEngine.Objects
 {
-    class Address
+    class NetworkAddress
     {
         public string BinaryAddress { get; private set; }
         public string BinarySubnetmask { get; private set; }
         public string IntegerAddress { get; private set; }
         public string IntegerSubnetmask { get; private set; }
 
-        public AddressRole AddressRole { get; private set; }
-
         //
 
-        public Address(string address, string subnetmask)
+        public NetworkAddress(string address, string subnetmask)
         {
-            if (Validators.DetermineAddressStructure(address) == AddressStructure.IntegerAddress)
+            if (AI.DetermineAddressStructure(address) == AddressStructure.IntegerAddress)
             {
                 IntegerAddress = address;
                 BinaryAddress = Converters.AddressIntToBin(address);
@@ -31,7 +29,7 @@ namespace Subnetter.SubnetterEngine.Objects
                 IntegerAddress = Converters.AddressBinToInt(address);
             }
 
-            if (Validators.DetermineSubnetmaskStructure(subnetmask) == AddressStructure.IntegerAddress)
+            if (AI.DetermineSubnetmaskStructure(subnetmask) == AddressStructure.IntegerAddress)
             {
                 IntegerSubnetmask = subnetmask;
                 BinarySubnetmask = Converters.AddressIntToBin(subnetmask);
@@ -41,6 +39,9 @@ namespace Subnetter.SubnetterEngine.Objects
                 BinarySubnetmask = subnetmask;
                 IntegerSubnetmask = Converters.AddressBinToInt(subnetmask);
             }
+
+            if (!Validators.IsValidAddressNetwork(address, subnetmask))
+                throw new Exception("Questo non è un indirizzo di rete");
         }
     }
 }

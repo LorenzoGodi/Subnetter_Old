@@ -25,45 +25,24 @@ namespace Subnetter.SubnetterEngine.Operators
                 else
                     return _IsValidSubnetmaskBin(address);
             }
-        }
+        }        
 
-        public static AddressStructure DetermineAddressStructure(string address)
+        public static bool IsValidAddressNetwork(string address, string subnetmask)
         {
-            try
-            {
-                if (_IsValidAddressInt(address))
-                    return AddressStructure.IntegerAddress;
-                else if (_IsValidAddressBin(address))
-                    return AddressStructure.BinaryAddress;
-                else
-                    throw null;
-            }
-            catch
-            {
-                throw new Exception("Indirizzo non valido");
-            }
-        }
+            address = Converters.AddressToBin(address);
+            subnetmask = Converters.AddressToBin(subnetmask);
 
-        public static AddressStructure DetermineSubnetmaskStructure(string address)
-        {
-            try
-            {
-                if (_IsValidSubnetmaskInt(address))
-                    return AddressStructure.IntegerAddress;
-                else if (_IsValidSubnetmaskBin(address))
-                    return AddressStructure.BinaryAddress;
-                else
-                    throw null;
-            }
-            catch
-            {
-                throw new Exception("Indirizzo di subnetmask non valido");
-            }
+            bool ok = true;
+            for (int v = 0; v < address.Length; v++)
+                if (subnetmask[v] == '0')
+                    ok = address[v] == '0' ? ok : false;
+
+            return ok;
         }
 
         //
 
-        private static bool _IsValidAddressBin(string addr)
+        public static bool _IsValidAddressBin(string addr)
         {
             string valid = "10.";
             bool ok = true;
@@ -87,7 +66,7 @@ namespace Subnetter.SubnetterEngine.Operators
             return ok;
         }
 
-        private static bool _IsValidAddressInt(string addr)
+        public static bool _IsValidAddressInt(string addr)
         {
             string valid = "1234567890.";
             bool ok = true;
@@ -106,7 +85,7 @@ namespace Subnetter.SubnetterEngine.Operators
             return ok;
         }
 
-        private static bool _IsValidSubnetmaskBin(string addr)
+        public static bool _IsValidSubnetmaskBin(string addr)
         {
             bool ok = _IsValidAddressBin(addr);
 
@@ -120,7 +99,7 @@ namespace Subnetter.SubnetterEngine.Operators
             return ok;
         }
 
-        private static bool _IsValidSubnetmaskInt(string addr)
+        public static bool _IsValidSubnetmaskInt(string addr)
         {
             return _IsValidAddressInt(addr) ? _IsValidSubnetmaskBin(Converters.AddressIntToBin(addr)) : false;
         }

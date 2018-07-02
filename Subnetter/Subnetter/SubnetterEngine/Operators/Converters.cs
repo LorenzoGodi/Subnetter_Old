@@ -36,5 +36,11 @@ namespace Subnetter.SubnetterEngine.Operators
 
             return result;
         }
+
+        public static string AddressToBin(string address)
+        {
+            address = Validators._IsValidSubnetmaskBin(address) ? address : Converters.AddressIntToBin(address);
+            return address;
+        }
     }
 }
