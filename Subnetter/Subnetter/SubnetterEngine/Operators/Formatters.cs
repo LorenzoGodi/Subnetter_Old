@@ -14,18 +14,25 @@ namespace Subnetter.SubnetterEngine.Operators
 
         public static string[] Divide(string address) => address.Split('.');
 
-        public static string Merge(params string[] parts)
+        public static string Merge(List<string> parts, string divisor = ".")
+        {
+            string result = parts[0].ToString();
+            for (int v = 1; v < parts.Count; v++)
+                result = result + divisor + parts[v].ToString();
+            return result;
+        }
+        public static string Merge(string[] parts, string divisor = ".")
         {
             string result = parts[0];
             for (int v = 1; v < parts.Length; v++)
-                result = result + "." + parts[v];
+                result = result + divisor + parts[v];
             return result;
         }
-        public static string Merge(params int[] parts)
+        public static string Merge(int[] parts, string divisor = ".")
         {
             string result = parts[0].ToString();
             for (int v = 1; v < parts.Length; v++)
-                result = result + "." + parts[v].ToString();
+                result = result + divisor + parts[v].ToString();
             return result;
         }
 
