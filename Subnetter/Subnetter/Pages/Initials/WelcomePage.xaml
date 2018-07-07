@@ -32,5 +32,12 @@
                 <TextBlock Text="11100110 . 00000000" Foreground="White"/>
             </Grid>
         </StackPanel>
+        <ListView Name="Ciao" RelativePanel.AlignVerticalCenterWithPanel="True">
+            <ListViewItem Content="1"/>
+            <ListViewItem Content="2"/>
+            <ListViewItem Content="3"/>
+            <ListViewItem Content="4"/>
+            <ListViewItem Content="5"/>
+        </ListView>
     </RelativePanel>
 </Page>

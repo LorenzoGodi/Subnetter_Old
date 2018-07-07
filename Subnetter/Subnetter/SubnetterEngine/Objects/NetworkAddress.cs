@@ -15,6 +15,8 @@ namespace Subnetter.SubnetterEngine.Objects
         public string BinaryAddress { get; private set; }
         public string IntegerAddress { get; private set; }
 
+        public List<SubAddress> Subnets { get; private set; }
+
         //
 
         public NetworkAddress(string address, string subnetmask)

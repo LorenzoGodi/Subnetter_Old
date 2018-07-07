@@ -8,6 +8,6 @@ namespace Subnetter.Classes.AppData
 {
     class SavedData
     {
-        public static Type GetStartingPage() => typeof(Pages.Initials.WelcomePage);
+        public static Type GetStartingPage() => typeof(Pages.NewNetPage);
     }
 }

@@ -15,17 +15,16 @@ using Windows.UI.Xaml.Navigation;
 
 // Il modello di elemento Pagina vuota è documentato all'indirizzo https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace Subnetter.Pages.Initials
+namespace Subnetter.Pages
 {
     /// <summary>
     /// Pagina vuota che può essere usata autonomamente oppure per l'esplorazione all'interno di un frame.
     /// </summary>
-    public sealed partial class WelcomePage : Page
+    public sealed partial class NewNetPage : Page
     {
-        public WelcomePage()
+        public NewNetPage()
         {
             this.InitializeComponent();
-            Ciao.Items.Add("Ciao");
         }
     }
 }
