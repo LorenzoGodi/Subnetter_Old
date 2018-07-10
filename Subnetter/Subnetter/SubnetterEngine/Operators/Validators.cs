@@ -59,7 +59,7 @@ namespace Subnetter.SubnetterEngine.Operators
 
                 foreach (string str in Formatters.Divide(addr))
                 {
-                    ok = _IsValidAddressNumber(Convert.ToInt32(str, 2).ToString()) ? ok : false;
+                    ok = (str != "") ? (_IsValidAddressNumber(Convert.ToInt32(str, 2).ToString()) ? ok : false) : false;
                 }
             }
 
