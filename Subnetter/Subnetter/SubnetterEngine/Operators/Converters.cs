@@ -14,7 +14,7 @@ namespace Subnetter.SubnetterEngine.Operators
             int[] parts = new int[4];
 
             for (int v = 0; v < 4; v++)
-                parts[v] = Convert.ToInt32(_parts[v]);
+                parts[v] = Convert.ToInt32(_parts[v], 2);
 
             return Formatters.Merge(parts);
         }
@@ -39,8 +39,35 @@ namespace Subnetter.SubnetterEngine.Operators
 
         public static string AddressToBin(string address)
         {
-            address = Validators._IsValidSubnetmaskBin(address) ? address : Converters.AddressIntToBin(address);
-            return address;
+            switch (AI.DetermineAddressStructure(address))
+            {
+                case AddressStructure.BinaryAddress:
+                    return address;
+                default:
+                    return AddressIntToBin(address);
+            }
+        }
+
+        public static int SubnetmaskToSlash(string address)
+        {
+            int slash = 0;
+            foreach (char chr in AddressToBin(address))
+                if (chr == '1')
+                    slash++;
+            return slash;
+        }
+
+        public static string SubnetmaskSlashToBin(int slash)
+        {
+            string str = "";
+            for (int v = 0; v < slash; v++)
+                str += "1";
+            return Formatters.AddPoints(Formatters.CompleteAddressHead(str));
+        }
+
+        public static string SubnetmaskSlashToInt(int slash)
+        {
+            return AddressBinToInt(SubnetmaskSlashToBin(slash));
         }
     }
 }

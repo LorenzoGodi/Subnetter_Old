@@ -1,13 +1,34 @@
 ﻿<Page
-    x:Class="Subnetter.Pages.NewNetPage"
+    x:Class="Subnetter.Pages.Subnetting.NewNetPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Subnetter.Pages"
+    xmlns:local="using:Subnetter.Pages.Subnetting"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <Style x:Key="gridTransition1" TargetType="Grid">
+            <Setter Property="Transitions">
+                <Setter.Value>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="300" IsStaggeringEnabled="False"/>
+                    </TransitionCollection>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="gridTransition2" TargetType="Grid">
+            <Setter Property="Transitions">
+                <Setter.Value>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="400" FromVerticalOffset="0" IsStaggeringEnabled="False"/>
+                    </TransitionCollection>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    
     <RelativePanel Background="{ThemeResource SystemControlBackgroundAccentBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -49,7 +70,7 @@
 
                 <StackPanel x:Name="stackPanel" Orientation="Horizontal">
 
-                    <Grid x:Name="grid1" BorderThickness="3" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" Width="400" Margin="10">
+                    <Grid Style="{StaticResource gridTransition1}" x:Name="grid1" BorderThickness="3" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" Width="400" Margin="10">
                         <StackPanel Background="{ThemeResource SystemControlAcrylicElementBrush}" Orientation="Vertical" Padding="10">
 
                             <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
@@ -59,18 +80,18 @@
 
                             <StackPanel Orientation="Vertical" Margin="20">
                                 <TextBlock Text="Standard" Margin="0,0,0,10"/>
-                                <TextBox />
+                                <TextBox x:Name="txtIndirizzoStandard" TextChanged="TextChanged"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Vertical" Margin="20">
                                 <TextBlock Text="Binario" Margin="0,0,0,10"/>
-                                <TextBox />
+                                <TextBox x:Name="txtIndirizzoBinario" TextChanged="TextChanged"/>
                             </StackPanel>
 
                         </StackPanel>
                     </Grid>
 
-                    <Grid x:Name="grid2" BorderThickness="3" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" Width="400" Margin="10">
+                    <Grid Style="{StaticResource gridTransition1}" x:Name="grid2" BorderThickness="3" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" Width="400" Margin="10">
                         <StackPanel Background="{ThemeResource SystemControlAcrylicElementBrush}" Orientation="Vertical" Padding="10">
 
                             <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
@@ -85,8 +106,8 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox HorizontalAlignment="Stretch"/>
-                                    <ComboBox Grid.Column="1" Margin="10,0,0,0">
+                                    <TextBox x:Name="txtSubnetmaskStandard" TextChanged="TextChanged" HorizontalAlignment="Stretch"/>
+                                    <ComboBox x:Name="comboBoxSlash" SelectionChanged="ComboBoxSlash_SelectionChanged" Grid.Column="1" Margin="10,0,0,0">
                                         <ComboBoxItem Content="/ 1"/>
                                         <ComboBoxItem Content="/ 2"/>
                                         <ComboBoxItem Content="/ 3"/>
@@ -124,7 +145,7 @@
 
                             <StackPanel Orientation="Vertical" Margin="20">
                                 <TextBlock Text="Binario" Margin="0,0,0,10"/>
-                                <TextBox />
+                                <TextBox x:Name="txtSubnetmaskBinario" TextChanged="TextChanged"/>
                             </StackPanel>
 
                         </StackPanel>
@@ -141,7 +162,7 @@
                 </Button.Content>
             </Button>
 
-            <Grid x:Name="gridError" Margin="10,50,10,10" HorizontalAlignment="Center">
+            <Grid Style="{StaticResource gridTransition2}" x:Name="gridError" Margin="10,50,10,10" HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>

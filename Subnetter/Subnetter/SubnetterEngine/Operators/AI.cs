@@ -17,7 +17,7 @@ namespace Subnetter.SubnetterEngine.Operators
                 else if (Validators._IsValidAddressBin(address))
                     return AddressStructure.BinaryAddress;
                 else
-                    throw null;
+                    throw new Exception("Indirizzo non valido");
             }
             catch
             {

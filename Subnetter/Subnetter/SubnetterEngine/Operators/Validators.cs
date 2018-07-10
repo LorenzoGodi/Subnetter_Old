@@ -111,10 +111,15 @@ namespace Subnetter.SubnetterEngine.Operators
 
         private static bool _IsValidAddressNumber(string number)
         {
-            for (int v = 0; v <= 255; v++)
-                if (number == v.ToString())
-                    return true;
-            return false;
+            try
+            {
+                int n = int.Parse(number);
+                return (n <= 255 && n >= 0);
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
