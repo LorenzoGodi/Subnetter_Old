@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\AppData\SavedData.cs" />
+    <Compile Include="Classes\XamlObjects\ObjectsAccessControl.cs" />
     <Compile Include="Classes\XamlObjects\XamlBuilder.cs" />
     <Compile Include="Pages\Initials\MainSubnetPage.xaml.cs">
       <DependentUpon>MainSubnetPage.xaml</DependentUpon>

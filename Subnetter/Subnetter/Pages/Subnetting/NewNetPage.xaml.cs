@@ -14,21 +14,31 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Subnetter.SubnetterEngine;
 using Subnetter.SubnetterEngine.Operators;
+using Subnetter.Classes.XamlObjects;
+using Windows.UI.Xaml.Media.Animation;
 
 // Il modello di elemento Pagina vuota è documentato all'indirizzo https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace Subnetter.Pages.Subnetting
 {
     /// <summary>
-    /// Pagina vuota che può essere usata autonomamente oppure per l'esplorazione all'interno di un frame.
+    /// Pagina che permette di avviare un nuovo progetto di subnetting.
     /// </summary>
     public sealed partial class NewNetPage : Page
     {
         ObjectsAccessControl oac;
 
+        bool addressStatus = false;
+        bool subnetStatus = false;
+
         public NewNetPage()
         {
             this.InitializeComponent();
+
+            //
+
+            //Storyboard sb = this.Resources["Terremoto"] as Storyboard;
+            //sb.Begin();
 
             //
 
@@ -43,6 +53,7 @@ namespace Subnetter.Pages.Subnetting
             oac.AddObj("A1", "A2", "B1", "B2", "B3"); // = Tags
 
             //
+
             comboBoxSlash.SelectedIndex = 0;
         }
 
@@ -55,11 +66,15 @@ namespace Subnetter.Pages.Subnetting
             {
                 string content = ((TextBox)sender).Text;
                 string result = "";
+                addressStatus = false;
                 //
                 if (tag == "A1")
                 {
                     if (Validators.IsValidAddress(content, AddressType.NetworkAddress, AddressStructure.IntegerAddress))
+                    {
                         result = Converters.AddressIntToBin(content);
+                        addressStatus = true;
+                    }
                     else
                         result = "";
                     if(txtIndirizzoBinario.Text != result)
@@ -71,7 +86,10 @@ namespace Subnetter.Pages.Subnetting
                 else
                 {
                     if (Validators.IsValidAddress(content, AddressType.NetworkAddress, AddressStructure.BinaryAddress))
+                    {
                         result = Converters.AddressBinToInt(content);
+                        addressStatus = true;
+                    }
                     else
                         result = "";
                     if(txtIndirizzoStandard.Text != result)
@@ -80,6 +98,7 @@ namespace Subnetter.Pages.Subnetting
                         txtIndirizzoStandard.Text = result;
                     }
                 }
+                SetErrorMessage();
             }
         }
 
@@ -91,6 +110,7 @@ namespace Subnetter.Pages.Subnetting
             {
                 string content = ((TextBox)sender).Text;
                 string result = "";
+                subnetStatus = false;
                 //
                 if (tag == "B1")
                 {
@@ -98,6 +118,7 @@ namespace Subnetter.Pages.Subnetting
                     {
                         result = Converters.AddressIntToBin(content);
                         SetSlash(Converters.SubnetmaskToSlash(content));
+                        subnetStatus = true;
                     }
                     else
                     {
@@ -116,6 +137,7 @@ namespace Subnetter.Pages.Subnetting
                     {
                         result = Converters.AddressBinToInt(content);
                         SetSlash(Converters.SubnetmaskToSlash(content));
+                        subnetStatus = true;
                     }
                     else
                     {
@@ -128,7 +150,7 @@ namespace Subnetter.Pages.Subnetting
                         txtSubnetmaskStandard.Text = result;
                     }
                 }
-                
+                SetErrorMessage();
             }
 
             // F
@@ -140,6 +162,7 @@ namespace Subnetter.Pages.Subnetting
         {
             if (oac.IsFree("B3"))
             {
+                subnetStatus = GetComboValue() != "";
                 string result1 = GetComboValue() != "" ? Converters.SubnetmaskSlashToInt(GetSlash()) : "";
                 string result2 = GetComboValue() != "" ? Converters.SubnetmaskSlashToBin(GetSlash()) : "";
 
@@ -155,63 +178,65 @@ namespace Subnetter.Pages.Subnetting
                     oac.Block("B2");
                 }
             }
+            SetErrorMessage();
 
             // F
             int GetSlash() => int.Parse(GetComboValue().Substring(2));
             string GetComboValue() => ((ComboBoxItem)comboBoxSlash.SelectedValue).Content.ToString();
         }
 
-        class ObjectsAccessControl
+        private void SetErrorMessage()
         {
-            class Obj
+            string error = null;
+            bool fail = false;
+            try
             {
-                public string name;
-                public int blockTimes;
+                fail = Validators.IsValidAddressNetwork(txtIndirizzoBinario.Text, txtSubnetmaskBinario.Text);
+            }
+            catch { }
+            if (fail)
+            {
 
-                public Obj(string name)
+            }
+            else if (!addressStatus && !subnetStatus) { error = "Impostare un indirizzo di rete e una subnetmask validi"; }
+            else if (!addressStatus) { error = "L'indirizzo di rete inserito non è valido"; }
+            else if (!subnetStatus) { error = "La subnetmask inserita non è valida"; }
+            else { error = "L'indirizzo di rete non rispetta la subnetmask inserita"; }
+
+            //
+
+            bool before = gridError2.Visibility == Visibility.Collapsed;
+            if (error == null)
+            {
+                gridError2.Visibility = Visibility.Collapsed;
+                button.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                button.Visibility = Visibility.Collapsed;
+                gridError2.Visibility = Visibility.Visible;
+                //
+                if(txtError.Text != error)
                 {
-                    this.name = name;
-                    blockTimes = 0;
+                    txtError.Text = error;
+                    Storyboard sb = this.Resources["Terremoto"] as Storyboard;
+                    sb.Begin();
                 }
-            }
-
-            List<Obj> objects;
-
-            public ObjectsAccessControl()
-            {
-                objects = new List<Obj>();
-            }
-
-            public void AddObj(string name)
-            {
-                objects.Add(new Obj(name));
-            }
-
-            public void AddObj(params string[] names)
-            {
-                foreach(string name in names)
-                    objects.Add(new Obj(name));
-            }
-
-            public void Block(string name)
-            {
-                for (int v = 0; v < objects.Count; v++)
-                    if (objects[v].name == name)
-                        objects[v].blockTimes++;
-            }
-
-            public bool IsFree(string name)
-            {
-                for (int v = 0; v < objects.Count; v++)
+                if (before)
                 {
-                    if (objects[v].name == name)
-                    {
-                        if(objects[v].blockTimes > 0) { objects[v].blockTimes--; return false; }
-                        return true;
-                    }
+                    Storyboard sb = this.Resources["Terremoto"] as Storyboard;
+                    sb.Begin();
                 }
-                throw new Exception("Oggetto non contenuto nella lista");
             }
         }
     }
 }
+// Impostare un indirizzo di rete e una subnetmask validi
+
+// L'indirizzo di rete inserito non è valido
+
+// La subnetmask inserita non è valida
+
+// L'indirizzo di rete e la subnetmask inseriti non sono validi
+
+// L'indirizzo di rete non rispetta la subnetmask inserita
