@@ -9,42 +9,52 @@ namespace Subnetter.SubnetterEngine.Objects
 {
     class NetworkAddress
     {
-        public string BinarySubnetmask { get; private set; }
-        public string IntegerSubnetmask { get; private set; }
-
-        public string BinaryAddress { get; private set; }
-        public string IntegerAddress { get; private set; }
-
-        public List<SubAddress> Subnets { get; private set; }
+        public int StartingSlash;
+        public List<string> AddressParts;
+        public List<NetworkAddress> Subnets;
 
         //
 
+        public bool IsSubnetted => Subnets != null;
+        public bool IsMainAddress => AddressParts.Count == 1 && !IsSubnetted;
+
+        public int MaxSubnets => AddressParts[AddressParts.Count - 1].Length - 1;
+
+        //
+
+        public NetworkAddress(string address, int slash)
+        {
+            AddressParts = new List<string>();
+
+            AddressParts.Add(Converters.AddressToBin(address));
+            StartingSlash = slash;
+
+
+            if (!Validators.IsValidAddressNetwork(address, Converters.SubnetmaskSlashToBin(slash)))
+                throw new Exception("Questo non è un indirizzo di rete");
+        }
+
         public NetworkAddress(string address, string subnetmask)
         {
-            if (AI.DetermineAddressStructure(address) == AddressStructure.IntegerAddress)
-            {
-                IntegerAddress = address;
-                BinaryAddress = Converters.AddressIntToBin(address);
-            }
-            else
-            {
-                BinaryAddress = address;
-                IntegerAddress = Converters.AddressBinToInt(address);
-            }
+            AddressParts = new List<string>();
 
-            if (AI.DetermineSubnetmaskStructure(subnetmask) == AddressStructure.IntegerAddress)
-            {
-                IntegerSubnetmask = subnetmask;
-                BinarySubnetmask = Converters.AddressIntToBin(subnetmask);
-            }
-            else
-            {
-                BinarySubnetmask = subnetmask;
-                IntegerSubnetmask = Converters.AddressBinToInt(subnetmask);
-            }
+            AddressParts.Add(Converters.AddressToBin(address));
+            StartingSlash = Converters.SubnetmaskToSlash(subnetmask);
+
 
             if (!Validators.IsValidAddressNetwork(address, subnetmask))
                 throw new Exception("Questo non è un indirizzo di rete");
+        }
+
+        //
+
+        /// <summary>
+        /// Procede alla creazione di sottoreti
+        /// </summary>
+        /// <param name="bits">Numero di bit della parte Host dell'attuale rete da utilizzare per creare sottoreti</param>
+        public void MakeSubnets(int bits)
+        {
+
         }
     }
 }

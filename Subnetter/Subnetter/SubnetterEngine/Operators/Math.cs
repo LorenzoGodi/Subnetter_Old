@@ -8,6 +8,9 @@ namespace Subnetter.SubnetterEngine.Operators
 {
     class Math
     {
+        /// <summary>
+        /// Incrementa di una unità l'indirizzo di rete
+        /// </summary>
         public static string Increment(string address)
         {
             address = Converters.AddressToBin(address);
@@ -28,6 +31,9 @@ namespace Subnetter.SubnetterEngine.Operators
             return address;
         }
 
+        /// <summary>
+        /// Decrementa di una unità l'indirizzo di rete
+        /// </summary>
         public static string Decrement(string address)
         {
             address = Converters.AddressToBin(address);

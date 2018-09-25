@@ -9,6 +9,13 @@ namespace Subnetter.SubnetterEngine.Operators
 {
     class Validators
     {
+        /// <summary>
+        /// Determina se un indirizzo di rete ha i requisiti per essere valido in base alla sua tipologia
+        /// </summary>
+        /// <param name="address">Indirizzo di rete da verificare</param>
+        /// <param name="type">Tipologia di indirizzo di rete</param>
+        /// <param name="structure">Struttura dell'indirizzo di rete</param>
+        /// <returns></returns>
         public static bool IsValidAddress(string address, AddressType type, AddressStructure structure)
         {
             if (type == AddressType.NetworkAddress)
@@ -27,7 +34,13 @@ namespace Subnetter.SubnetterEngine.Operators
             }
         }        
 
+        /// <summary>
+        /// Determina se l'indirizzo dato è un indirizzo di rete valido facendo riferimento alla subnetmask fornita
+        /// </summary>
+        /// <param name="address">Indirizzo di rete da verificare</param>
+        /// <param name="subnetmask">Subnetmask di riferimento</param>
         public static bool IsValidAddressNetwork(string address, string subnetmask)
+
         {
             address = Converters.AddressToBin(address);
             subnetmask = Converters.AddressToBin(subnetmask);
@@ -38,6 +51,19 @@ namespace Subnetter.SubnetterEngine.Operators
                     ok = address[v] == '0' ? ok : false;
 
             return ok;
+        }
+
+        /// <summary>
+        /// Determina se l'indirizzo dato è un potenziale indirizzo di rete valido
+        /// </summary>
+        /// <param name="address">Indirizzo di rete da verificare</param>
+        public static NetworkAddressStatus NetAddStat(string address)
+        {
+            if (address[address.Length - 1] == 0)
+                if (address[address.Length - 2] == 0)
+                    return NetworkAddressStatus.Valid;
+                else return NetworkAddressStatus.OnlyTwoHosts;
+            else return NetworkAddressStatus.NotValid;
         }
 
         //

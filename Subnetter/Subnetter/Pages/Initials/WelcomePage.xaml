@@ -14,7 +14,7 @@
                 <TextBlock Text="11100110" Foreground="White"/>
             </Grid>
             <Grid Padding="5,2,5,2">
-                <TextBlock Text="." Foreground="Black"/>
+                <TextBlock Text="." Foreground="White"/>
             </Grid>
             <Grid Margin="0,0,8,0" Background="#0D47A1" Padding="5,2,5,2">
                 <TextBlock Text="10" Foreground="White"/>

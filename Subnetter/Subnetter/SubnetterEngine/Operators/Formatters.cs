@@ -8,12 +8,27 @@ namespace Subnetter.SubnetterEngine.Operators
 {
     class Formatters
     {
+        /// <summary>
+        /// Rimuove i punti '.' contenuti in un indirizzo
+        /// </summary>
         public static string RemovePoints(string address) => address.Replace(".", "");
-
+        
+        /// <summary>
+        /// Aggiunge i punti a un idirizzo in base binaria dividendo in gruppi da 8 bit
+        /// </summary>
         public static string AddPoints(string address) => address.Substring(0, 8) + "." + address.Substring(8, 8) + "." + address.Substring(16, 8) + "." + address.Substring(24, 8);
 
+        /// <summary>
+        /// Divide un indirizzo nelle quattro parti divise da un punto
+        /// </summary>
         public static string[] Divide(string address) => address.Split('.');
 
+        /// <summary>
+        /// Esegue il merge delle parti di un indirizzo
+        /// </summary>
+        /// <param name="parts">Parti dell'indirizzo</param>
+        /// <param name="divisor">Divisore ('.' di default)</param>
+        /// <returns>Indirizzo in formato normale</returns>
         public static string Merge(List<string> parts, string divisor = ".")
         {
             string result = parts[0].ToString();
@@ -21,6 +36,13 @@ namespace Subnetter.SubnetterEngine.Operators
                 result = result + divisor + parts[v].ToString();
             return result;
         }
+
+        /// <summary>
+        /// Esegue il merge delle parti di un indirizzo
+        /// </summary>
+        /// <param name="parts">Parti dell'indirizzo</param>
+        /// <param name="divisor">Divisore ('.' di default)</param>
+        /// <returns>Indirizzo in formato normale</returns>
         public static string Merge(string[] parts, string divisor = ".")
         {
             string result = parts[0];
@@ -28,6 +50,13 @@ namespace Subnetter.SubnetterEngine.Operators
                 result = result + divisor + parts[v];
             return result;
         }
+
+        /// <summary>
+        /// Esegue il merge delle parti di un indirizzo
+        /// </summary>
+        /// <param name="parts">Parti dell'indirizzo</param>
+        /// <param name="divisor">Divisore ('.' di default)</param>
+        /// <returns>Indirizzo in formato normale</returns>
         public static string Merge(int[] parts, string divisor = ".")
         {
             string result = parts[0].ToString();
@@ -36,6 +65,9 @@ namespace Subnetter.SubnetterEngine.Operators
             return result;
         }
 
+        /// <summary>
+        /// Completa un elenco di bit con 0 o 1
+        /// </summary>
         public static string CompleteAddressHead(string address, char bit = '0')
         {
             if(bit != '1' && bit != '0') { throw new Exception("Bit non valido"); }

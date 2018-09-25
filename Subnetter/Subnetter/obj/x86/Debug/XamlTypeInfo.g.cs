@@ -180,17 +180,21 @@ namespace Subnetter.Subnetter_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[4];
-            _typeNameTable[0] = "Subnetter.Pages.Initials.WelcomePage";
+            _typeNameTable = new string[6];
+            _typeNameTable[0] = "Subnetter.Pages.Initials.MainSubnetPage";
             _typeNameTable[1] = "Windows.UI.Xaml.Controls.Page";
             _typeNameTable[2] = "Windows.UI.Xaml.Controls.UserControl";
-            _typeNameTable[3] = "Subnetter.Pages.Subnetting.NewNetPage";
+            _typeNameTable[3] = "Subnetter.Pages.Initials.WelcomePage";
+            _typeNameTable[4] = "Subnetter.Pages.Subnetting.NewNetPage";
+            _typeNameTable[5] = "Subnetter.Pages.Subnetting.NewSubnetPage";
 
-            _typeTable = new global::System.Type[4];
-            _typeTable[0] = typeof(global::Subnetter.Pages.Initials.WelcomePage);
+            _typeTable = new global::System.Type[6];
+            _typeTable[0] = typeof(global::Subnetter.Pages.Initials.MainSubnetPage);
             _typeTable[1] = typeof(global::Windows.UI.Xaml.Controls.Page);
             _typeTable[2] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
-            _typeTable[3] = typeof(global::Subnetter.Pages.Subnetting.NewNetPage);
+            _typeTable[3] = typeof(global::Subnetter.Pages.Initials.WelcomePage);
+            _typeTable[4] = typeof(global::Subnetter.Pages.Subnetting.NewNetPage);
+            _typeTable[5] = typeof(global::Subnetter.Pages.Subnetting.NewSubnetPage);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -225,8 +229,10 @@ namespace Subnetter.Subnetter_XamlTypeInfo
             return -1;
         }
 
-        private object Activate_0_WelcomePage() { return new global::Subnetter.Pages.Initials.WelcomePage(); }
-        private object Activate_3_NewNetPage() { return new global::Subnetter.Pages.Subnetting.NewNetPage(); }
+        private object Activate_0_MainSubnetPage() { return new global::Subnetter.Pages.Initials.MainSubnetPage(); }
+        private object Activate_3_WelcomePage() { return new global::Subnetter.Pages.Initials.WelcomePage(); }
+        private object Activate_4_NewNetPage() { return new global::Subnetter.Pages.Subnetting.NewNetPage(); }
+        private object Activate_5_NewSubnetPage() { return new global::Subnetter.Pages.Subnetting.NewSubnetPage(); }
 
         private global::Windows.UI.Xaml.Markup.IXamlType CreateXamlType(int typeIndex)
         {
@@ -238,9 +244,9 @@ namespace Subnetter.Subnetter_XamlTypeInfo
             switch (typeIndex)
             {
 
-            case 0:   //  Subnetter.Pages.Initials.WelcomePage
+            case 0:   //  Subnetter.Pages.Initials.MainSubnetPage
                 userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_0_WelcomePage;
+                userType.Activator = Activate_0_MainSubnetPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
@@ -253,9 +259,23 @@ namespace Subnetter.Subnetter_XamlTypeInfo
                 xamlType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 3:   //  Subnetter.Pages.Subnetting.NewNetPage
+            case 3:   //  Subnetter.Pages.Initials.WelcomePage
                 userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_3_NewNetPage;
+                userType.Activator = Activate_3_WelcomePage;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 4:   //  Subnetter.Pages.Subnetting.NewNetPage
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_4_NewNetPage;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 5:   //  Subnetter.Pages.Subnetting.NewSubnetPage
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_5_NewSubnetPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;

@@ -8,6 +8,11 @@ namespace Subnetter.SubnetterEngine.Operators
 {
     class AI
     {
+        /// <summary>
+        /// Determina in quale base è la stringa di indirizzo, binaria o decimale
+        /// </summary>
+        /// <param name="address">Stringa dell'indirizzo</param>
+        /// <returns>Enum che indica il tipo di base</returns>
         public static AddressStructure DetermineAddressStructure(string address)
         {
             try
@@ -25,6 +30,12 @@ namespace Subnetter.SubnetterEngine.Operators
             }
         }
 
+
+        /// <summary>
+        /// Determina in quale base è la stringa di indirizzo di subnetmask, binaria o decimale
+        /// </summary>
+        /// <param name="address">Stringa dell'indirizzo di subnetmask</param>
+        /// <returns>Enum che indica il tipo di base</returns>
         public static AddressStructure DetermineSubnetmaskStructure(string address)
         {
             try

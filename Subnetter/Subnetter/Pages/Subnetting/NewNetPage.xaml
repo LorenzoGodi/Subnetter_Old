@@ -29,7 +29,7 @@
         </Style>
     </Page.Resources>
     
-    <RelativePanel Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+    <RelativePanel Background="{ThemeResource SystemControlBackgroundAccentBrush}"> <!--SystemControlAccentAcrylicWindowAccentMediumHighBrush-->
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="Big">
@@ -80,12 +80,12 @@
 
                             <StackPanel Orientation="Vertical" Margin="20">
                                 <TextBlock Text="Standard" Margin="0,0,0,10"/>
-                                <TextBox x:Name="txtIndirizzoStandard" TextChanged="TextChanged"/>
+                                <TextBox x:Name="txtIndirizzoStandard" Tag="A1" TextChanged="ChangedAddress"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Vertical" Margin="20">
                                 <TextBlock Text="Binario" Margin="0,0,0,10"/>
-                                <TextBox x:Name="txtIndirizzoBinario" TextChanged="TextChanged"/>
+                                <TextBox x:Name="txtIndirizzoBinario" Tag="A2" TextChanged="ChangedAddress"/>
                             </StackPanel>
 
                         </StackPanel>
@@ -106,8 +106,8 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox x:Name="txtSubnetmaskStandard" TextChanged="TextChanged" HorizontalAlignment="Stretch"/>
-                                    <ComboBox x:Name="comboBoxSlash" SelectionChanged="ComboBoxSlash_SelectionChanged" Grid.Column="1" Margin="10,0,0,0">
+                                    <TextBox x:Name="txtSubnetmaskStandard" Tag="B1" TextChanged="ChangedSubnet" HorizontalAlignment="Stretch"/>
+                                    <ComboBox x:Name="comboBoxSlash" Tag="B3" SelectionChanged="ComboBoxSlash_SelectionChanged" Grid.Column="1" Margin="10,0,0,0">
                                         <ComboBoxItem Content=""/>
                                         <ComboBoxItem Content="/ 1"/>
                                         <ComboBoxItem Content="/ 2"/>
@@ -146,7 +146,7 @@
 
                             <StackPanel Orientation="Vertical" Margin="20">
                                 <TextBlock Text="Binario" Margin="0,0,0,10"/>
-                                <TextBox x:Name="txtSubnetmaskBinario" TextChanged="TextChanged"/>
+                                <TextBox x:Name="txtSubnetmaskBinario" Tag="B2" TextChanged="ChangedSubnet"/>
                             </StackPanel>
 
                         </StackPanel>
@@ -175,7 +175,7 @@
 
                 <TextBlock Grid.RowSpan="2" FontFamily="Segoe MDL2 Assets" Text="&#xE7BA;" FontSize="35" VerticalAlignment="Center" Margin="0,0,20,0"/>
                 <TextBlock Grid.Column="1" Text="Attenzione" Style="{ThemeResource BaseTextBlockStyle}"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="Impostare un indirizzo e una subnetmask" Margin="0,0,0,2"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="Impostare un indirizzo e una subnetmask validi" Margin="0,0,0,2"/>
             </Grid>
 
             </StackPanel>

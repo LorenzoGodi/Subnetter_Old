@@ -24,7 +24,7 @@ namespace Subnetter.Pages.Subnetting
     /// </summary>
     public sealed partial class NewNetPage : Page
     {
-        ModifyControl mc;
+        ObjectsAccessControl oac;
 
         public NewNetPage()
         {
@@ -37,157 +37,181 @@ namespace Subnetter.Pages.Subnetting
             objs.Add(txtSubnetmaskBinario);
             objs.Add(comboBoxSlash);
 
-            mc = new ModifyControl(objs);
+            //
+            
+            oac = new ObjectsAccessControl();
+            oac.AddObj("A1", "A2", "B1", "B2", "B3"); // = Tags
 
             //
             comboBoxSlash.SelectedIndex = 0;
         }
 
-        private void TextChanged(object sender, TextChangedEventArgs e)
+
+        private void ChangedAddress(object sender, TextChangedEventArgs e)
         {
-            bool a = mc.Access(sender);
-            if (a)
+            string tag = ((TextBox)sender).Tag.ToString();
+
+            if (oac.IsFree(tag))
             {
                 string content = ((TextBox)sender).Text;
+                string result = "";
                 //
-                bool isMaskOk = true;
-                bool isAddrOk = true;
-
-                switch (((TextBox)sender).Name)
+                if (tag == "A1")
                 {
-                    case "txtIndirizzoStandard":
-                        if (Validators.IsValidAddress(content, AddressType.NetworkAddress, AddressStructure.IntegerAddress))
-                        {
-                            txtIndirizzoStandard.Text = Converters.AddressIntToBin(content);
-                        }
-                        else
-                        {
-                            isAddrOk = false;
-                        }
-                        break;
-                    case "txtIndirizzoBinario":
-                        if (Validators.IsValidAddress(content, AddressType.NetworkAddress, AddressStructure.BinaryAddress))
-                        {
-                            txtIndirizzoStandard.Text = Converters.AddressBinToInt(content);
-                        }
-                        else { isAddrOk = false; }
-                        break;
-                    case "txtSubnetmaskStandard":
-                        if (Validators.IsValidAddress(content, AddressType.SubnetmaskAddress, AddressStructure.IntegerAddress))
-                        {
-                            if (txtSubnetmaskBinario.Text != Converters.AddressIntToBin(content)) { txtSubnetmaskBinario.Text = Converters.AddressIntToBin(content); } else { mc.Free(txtSubnetmaskBinario); }
-                            if(GetSlash() != Converters.SubnetmaskToSlash(content)) { SetSlash(Converters.SubnetmaskToSlash(content)); } else { mc.Free(comboBoxSlash); }
-                        } 
-                        else
-                        {
-                            isMaskOk = false;
-                            if (txtSubnetmaskBinario.Text != "") { txtSubnetmaskBinario.Text = ""; } else { mc.Free(txtSubnetmaskBinario); }
-                            if (GetComboValue() != "") { SetSlashEmpty(); } else { mc.Free(comboBoxSlash); }
-                        }
-                        break;
-                    case "txtSubnetmaskBinario":
-                        if (Validators.IsValidAddress(content, AddressType.SubnetmaskAddress, AddressStructure.BinaryAddress))
-                        {
-                            if (txtSubnetmaskStandard.Text != Converters.AddressBinToInt(content)) { txtSubnetmaskStandard.Text = Converters.AddressBinToInt(content); } else { mc.Free(txtSubnetmaskStandard); }
-                            if (GetSlash() != Converters.SubnetmaskToSlash(content)) { SetSlash(Converters.SubnetmaskToSlash(content)); } else { mc.Free(comboBoxSlash); }
-                        }
-                        else
-                        {
-                            isMaskOk = false;
-                            if (txtSubnetmaskStandard.Text != "") { txtSubnetmaskStandard.Text = ""; } else { mc.Free(txtSubnetmaskStandard); }
-                            if (GetComboValue() != "") { SetSlashEmpty(); } else { mc.Free(comboBoxSlash); }
-                        }
-                        break;
+                    if (Validators.IsValidAddress(content, AddressType.NetworkAddress, AddressStructure.IntegerAddress))
+                        result = Converters.AddressIntToBin(content);
+                    else
+                        result = "";
+                    if(txtIndirizzoBinario.Text != result)
+                    {
+                        oac.Block("A2");
+                        txtIndirizzoBinario.Text = result;
+                    }
                 }
-                // F
-                void SetSlash(int slash) { comboBoxSlash.SelectedIndex = slash; }
-                void SetSlashEmpty() { comboBoxSlash.SelectedIndex = 0; }
-                int GetSlash() => (GetComboValue() != "") ? int.Parse(GetComboValue().Substring(2)) : -1;
-                string GetComboValue() => ((ComboBoxItem)comboBoxSlash.SelectedValue).Content.ToString();
-                void FreeCombo() { mc.Free(comboBoxSlash); }
+                else
+                {
+                    if (Validators.IsValidAddress(content, AddressType.NetworkAddress, AddressStructure.BinaryAddress))
+                        result = Converters.AddressBinToInt(content);
+                    else
+                        result = "";
+                    if(txtIndirizzoStandard.Text != result)
+                    {
+                        oac.Block("A1");
+                        txtIndirizzoStandard.Text = result;
+                    }
+                }
             }
+        }
+
+        private void ChangedSubnet(object sender, TextChangedEventArgs e)
+        {
+            string tag = ((TextBox)sender).Tag.ToString();
+
+            if (oac.IsFree(tag))
+            {
+                string content = ((TextBox)sender).Text;
+                string result = "";
+                //
+                if (tag == "B1")
+                {
+                    if (Validators.IsValidAddress(content, AddressType.SubnetmaskAddress, AddressStructure.IntegerAddress))
+                    {
+                        result = Converters.AddressIntToBin(content);
+                        SetSlash(Converters.SubnetmaskToSlash(content));
+                    }
+                    else
+                    {
+                        result = "";
+                        SetSlashEmpty();
+                    }
+                    if (txtSubnetmaskBinario.Text != result)
+                    {
+                        oac.Block("B2");
+                        txtSubnetmaskBinario.Text = result;
+                    }
+                }
+                else
+                {
+                    if (Validators.IsValidAddress(content, AddressType.SubnetmaskAddress, AddressStructure.BinaryAddress))
+                    {
+                        result = Converters.AddressBinToInt(content);
+                        SetSlash(Converters.SubnetmaskToSlash(content));
+                    }
+                    else
+                    {
+                        result = "";
+                        SetSlashEmpty();
+                    }
+                    if (txtSubnetmaskStandard.Text != result)
+                    {
+                        oac.Block("B1");
+                        txtSubnetmaskStandard.Text = result;
+                    }
+                }
+                
+            }
+
+            // F
+            void SetSlash(int slash) { if (comboBoxSlash.SelectedIndex != slash) { oac.Block("B3"); comboBoxSlash.SelectedIndex = slash; } }
+            void SetSlashEmpty() { SetSlash(0); }
         }
 
         private void ComboBoxSlash_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            bool a = mc.Access(sender);
-            if (a)
+            if (oac.IsFree("B3"))
             {
-                if(GetComboValue() != "")
+                string result1 = GetComboValue() != "" ? Converters.SubnetmaskSlashToInt(GetSlash()) : "";
+                string result2 = GetComboValue() != "" ? Converters.SubnetmaskSlashToBin(GetSlash()) : "";
+
+                if (txtSubnetmaskStandard.Text != result1)
                 {
-                    txtSubnetmaskStandard.Text = Converters.SubnetmaskSlashToInt(GetSlash());
-                    txtSubnetmaskBinario.Text = Converters.SubnetmaskSlashToBin(GetSlash());
+                    txtSubnetmaskStandard.Text = result1;
+                    oac.Block("B1");
                 }
-                else
+
+                if (txtSubnetmaskBinario.Text != result2)
                 {
-                    if (txtSubnetmaskBinario.Text != "") { txtSubnetmaskBinario.Text = ""; } else { mc.Free(txtSubnetmaskBinario); }
-                    if (txtSubnetmaskStandard.Text != "") { txtSubnetmaskStandard.Text = ""; } else { mc.Free(txtSubnetmaskStandard); }
+                    txtSubnetmaskBinario.Text = result2;
+                    oac.Block("B2");
                 }
-                //
-                int GetSlash() => int.Parse(GetComboValue().Substring(2));
-                string GetComboValue() => ((ComboBoxItem)comboBoxSlash.SelectedValue).Content.ToString();
             }
+
+            // F
+            int GetSlash() => int.Parse(GetComboValue().Substring(2));
+            string GetComboValue() => ((ComboBoxItem)comboBoxSlash.SelectedValue).Content.ToString();
         }
 
-        class ModifyControl
+        class ObjectsAccessControl
         {
-            List<object> freeObjects;
-            List<object> blockedObjects;
-
-            //
-
-            public ModifyControl(List<object> objects)
+            class Obj
             {
-                freeObjects = new List<object>(objects);
-                blockedObjects = new List<object>();
+                public string name;
+                public int blockTimes;
+
+                public Obj(string name)
+                {
+                    this.name = name;
+                    blockTimes = 0;
+                }
             }
 
-            public bool Access(object sender)
+            List<Obj> objects;
+
+            public ObjectsAccessControl()
             {
-                if(blockedObjects.Contains(sender))
+                objects = new List<Obj>();
+            }
+
+            public void AddObj(string name)
+            {
+                objects.Add(new Obj(name));
+            }
+
+            public void AddObj(params string[] names)
+            {
+                foreach(string name in names)
+                    objects.Add(new Obj(name));
+            }
+
+            public void Block(string name)
+            {
+                for (int v = 0; v < objects.Count; v++)
+                    if (objects[v].name == name)
+                        objects[v].blockTimes++;
+            }
+
+            public bool IsFree(string name)
+            {
+                for (int v = 0; v < objects.Count; v++)
                 {
-                    freeObjects.Add(sender);
-                    blockedObjects.Remove(sender);
-                    //
-                    return false;
-                }
-                else
-                {
-                    if(blockedObjects.Count > 0)
+                    if (objects[v].name == name)
                     {
-                        throw new Exception("Errore :/");
+                        if(objects[v].blockTimes > 0) { objects[v].blockTimes--; return false; }
+                        return true;
                     }
-                    //
-                    foreach(object obj in freeObjects)
-                    {
-                        if(obj != sender)
-                        {
-                            blockedObjects.Add(obj);
-                        }
-                    }
-                    freeObjects = new List<object>();
-                    freeObjects.Add(sender);
-                    //
-                    return true;
                 }
-            }
-
-            public void Free(object sender)
-            {
-                if (blockedObjects.Contains(sender))
-                {
-                    freeObjects.Add(sender);
-                    blockedObjects.Remove(sender);
-                }
-            }
-
-            public void FreeAll(object sender)
-            {
-                foreach (object obj in freeObjects)
-                    freeObjects.Add(obj);
-                blockedObjects = new List<object>();
+                throw new Exception("Oggetto non contenuto nella lista");
             }
         }
-
     }
 }

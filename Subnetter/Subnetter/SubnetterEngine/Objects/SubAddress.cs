@@ -68,6 +68,9 @@ namespace Subnetter.SubnetterEngine.Objects
             get { return Formatters.Merge(subnetsParts, "").Length; }
         }
 
+        /// <summary>
+        /// Ritorna il numero massimo di bit (della parte host) che è ancora possibile utilizzare per il subnetting
+        /// </summary>
         public int MaxBitsOfMoreSubnet
         {
             get { return 32 - (addressHead.Length + SubnetLength + 2); }
