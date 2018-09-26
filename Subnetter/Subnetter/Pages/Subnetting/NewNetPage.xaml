@@ -30,11 +30,17 @@
         <Storyboard x:Name="Terremoto">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="z" Storyboard.TargetProperty="(FrameworkElement.Width)" EnableDependentAnimation="True">
                 <EasingDoubleKeyFrame KeyTime="00:00:00" Value="40"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.1000000" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="80"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.6000000" Value="80"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.9000000" Value="40"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.0625000" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.1250000" Value="80"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.2500000" Value="20"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3750000" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="40"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="ButtonShow">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="button" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.1"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.6000000" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Page.Resources>
@@ -174,7 +180,7 @@
                     </Button.Content>
                 </Button>
 
-                <RelativePanel x:Name="gridError2" Margin="10,50,50,10" HorizontalAlignment="Center">
+                <RelativePanel x:Name="gridError2" Margin="10,50,50,10" HorizontalAlignment="Center" MinHeight="40">
                     <Grid Width="80" Name="z" RelativePanel.AlignLeftWithPanel="True"/>
                     <Grid Style="{StaticResource gridTransition2}" x:Name="gridError" RelativePanel.RightOf="z">
                         <Grid.ColumnDefinitions>
@@ -192,22 +198,6 @@
                            Text="Impostare un indirizzo e una subnetmask validi" Margin="0,0,0,2"/>
                     </Grid>
                 </RelativePanel>
-
-                <!--<Grid Style="{StaticResource gridTransition2}" x:Name="gridError" Margin="10,50,10,10" HorizontalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.RowSpan="2" FontFamily="Segoe MDL2 Assets" Text="&#xE7BA;" FontSize="35" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                    <TextBlock Grid.Column="1" Text="Attenzione" Style="{ThemeResource BaseTextBlockStyle}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" AllowDrop="True" MaxWidth="600"
-                           Text="Impostare un indirizzo e una subnetmask validi" Margin="0,0,0,2"/>
-                </Grid>-->
 
             </StackPanel>
 

@@ -209,7 +209,13 @@ namespace Subnetter.Pages.Subnetting
             if (error == null)
             {
                 gridError2.Visibility = Visibility.Collapsed;
-                button.Visibility = Visibility.Visible;
+                if (button.Visibility == Visibility.Collapsed)
+                {                    
+                    button.Opacity = 0.1;
+                    button.Visibility = Visibility.Visible;
+                    Storyboard sb = this.Resources["ButtonShow"] as Storyboard;
+                    sb.Begin();
+                }
             }
             else
             {
@@ -231,12 +237,3 @@ namespace Subnetter.Pages.Subnetting
         }
     }
 }
-// Impostare un indirizzo di rete e una subnetmask validi
-
-// L'indirizzo di rete inserito non è valido
-
-// La subnetmask inserita non è valida
-
-// L'indirizzo di rete e la subnetmask inseriti non sono validi
-
-// L'indirizzo di rete non rispetta la subnetmask inserita
