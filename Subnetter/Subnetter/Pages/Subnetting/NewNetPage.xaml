@@ -6,10 +6,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
         <Style x:Key="gridTransition1" TargetType="Grid">
+            <Setter Property="Transitions">
+                <Setter.Value>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="0" FromVerticalOffset="300" IsStaggeringEnabled="False"/>
+                    </TransitionCollection>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="dspTransition1" TargetType="controls:DropShadowPanel">
             <Setter Property="Transitions">
                 <Setter.Value>
                     <TransitionCollection>
@@ -42,10 +52,26 @@
                 <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.1"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:00.6000000" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
+            <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetName="w" Storyboard.TargetProperty="(FrameworkElement.Height)" EnableDependentAnimation="True">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="50"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="50"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.6" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ww" Storyboard.TargetProperty="(FrameworkElement.Height)" EnableDependentAnimation="True">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.6" Value="50"/>
+            </DoubleAnimationUsingKeyFrames>-->
+        </Storyboard>
+        <Storyboard x:Name="Zio">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="grid" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Page.Resources>
 
-    <RelativePanel Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+    <RelativePanel Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}">
+        <!--Background="{ThemeResource SystemControlBackgroundAccentBrush}"-->
         <!--SystemControlAccentAcrylicWindowAccentMediumHighBrush-->
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -63,7 +89,7 @@
                         <Setter Target="button.(FrameworkElement.HorizontalAlignment)" Value="Stretch"/>
                         <Setter Target="button.(FrameworkElement.Margin)">
                             <Setter.Value>
-                                <Thickness>10,10,10,0</Thickness>
+                                <Thickness>10,10,10,62</Thickness>
                             </Setter.Value>
                         </Setter>
                         <Setter Target="gridError.(FrameworkElement.Margin)">
@@ -76,7 +102,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Grid RelativePanel.AlignHorizontalCenterWithPanel="True"
+        <Grid x:Name="grid" RelativePanel.AlignHorizontalCenterWithPanel="True"
               RelativePanel.AlignVerticalCenterWithPanel="True"
               RelativePanel.AlignLeftWithPanel="False"
               RelativePanel.AlignTopWithPanel="False">
@@ -87,7 +113,93 @@
 
                 <StackPanel x:Name="stackPanel" Orientation="Horizontal">
 
-                    <Grid Style="{StaticResource gridTransition1}" x:Name="grid1" BorderThickness="3" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" Width="400" Margin="10">
+                    <controls:DropShadowPanel Style="{StaticResource dspTransition1}" BlurRadius="15" ShadowOpacity="0.40" OffsetX="10" OffsetY="10" Color="Black" Margin="10">
+                        <Grid x:Name="grid1" BorderThickness="0" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" Width="400">
+                            <StackPanel Background="{ThemeResource SystemControlAcrylicElementBrush}" Orientation="Vertical" Padding="10">
+
+                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
+                               Text="Indirizzo"
+                               TextAlignment="Center"
+                               Margin="10"/>
+
+                                <StackPanel Orientation="Vertical" Margin="20">
+                                    <TextBlock Text="Standard" Margin="0,0,0,10"/>
+                                    <TextBox x:Name="txtIndirizzoStandard" Tag="A1" TextChanged="ChangedAddress"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Vertical" Margin="20">
+                                    <TextBlock Text="Binario" Margin="0,0,0,10"/>
+                                    <TextBox x:Name="txtIndirizzoBinario" Tag="A2" TextChanged="ChangedAddress"/>
+                                </StackPanel>
+
+                            </StackPanel>
+                        </Grid>
+                    </controls:DropShadowPanel>
+
+                    <controls:DropShadowPanel Style="{StaticResource dspTransition1}" BlurRadius="15" ShadowOpacity="0.40" OffsetX="10" OffsetY="10" Color="Black" Margin="10">
+                        <Grid x:Name="grid2" BorderThickness="0" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" Width="400">
+                            <StackPanel Background="{ThemeResource SystemControlAcrylicElementBrush}" Orientation="Vertical" Padding="10">
+
+                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
+                               Text="Subnetmask"
+                               TextAlignment="Center"
+                               Margin="10"/>
+
+                                <StackPanel Orientation="Vertical" Margin="20">
+                                    <TextBlock Text="Standard" Margin="0,0,0,10"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="txtSubnetmaskStandard" Tag="B1" TextChanged="ChangedSubnet" HorizontalAlignment="Stretch"/>
+                                        <ComboBox x:Name="comboBoxSlash" Tag="B3" SelectionChanged="ComboBoxSlash_SelectionChanged" Grid.Column="1" Margin="10,0,0,0">
+                                            <ComboBoxItem Content=""/>
+                                            <ComboBoxItem Content="/ 1"/>
+                                            <ComboBoxItem Content="/ 2"/>
+                                            <ComboBoxItem Content="/ 3"/>
+                                            <ComboBoxItem Content="/ 4"/>
+                                            <ComboBoxItem Content="/ 5"/>
+                                            <ComboBoxItem Content="/ 6"/>
+                                            <ComboBoxItem Content="/ 7"/>
+                                            <ComboBoxItem Content="/ 8"/>
+                                            <ComboBoxItem Content="/ 9"/>
+                                            <ComboBoxItem Content="/ 10"/>
+                                            <ComboBoxItem Content="/ 11"/>
+                                            <ComboBoxItem Content="/ 12"/>
+                                            <ComboBoxItem Content="/ 13"/>
+                                            <ComboBoxItem Content="/ 14"/>
+                                            <ComboBoxItem Content="/ 15"/>
+                                            <ComboBoxItem Content="/ 16"/>
+                                            <ComboBoxItem Content="/ 17"/>
+                                            <ComboBoxItem Content="/ 18"/>
+                                            <ComboBoxItem Content="/ 19"/>
+                                            <ComboBoxItem Content="/ 20"/>
+                                            <ComboBoxItem Content="/ 21"/>
+                                            <ComboBoxItem Content="/ 22"/>
+                                            <ComboBoxItem Content="/ 23"/>
+                                            <ComboBoxItem Content="/ 24"/>
+                                            <ComboBoxItem Content="/ 25"/>
+                                            <ComboBoxItem Content="/ 26"/>
+                                            <ComboBoxItem Content="/ 27"/>
+                                            <ComboBoxItem Content="/ 28"/>
+                                            <ComboBoxItem Content="/ 29"/>
+                                            <ComboBoxItem Content="/ 30"/>
+                                            <ComboBoxItem Content="/ 31"/>
+                                        </ComboBox>
+                                    </Grid>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Vertical" Margin="20">
+                                    <TextBlock Text="Binario" Margin="0,0,0,10"/>
+                                    <TextBox x:Name="txtSubnetmaskBinario" Tag="B2" TextChanged="ChangedSubnet"/>
+                                </StackPanel>
+
+                            </StackPanel>
+                        </Grid>
+                    </controls:DropShadowPanel>
+
+                    <!--<Grid Style="{StaticResource gridTransition1}" x:Name="grid1" BorderThickness="3" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" Width="400" Margin="10">
                         <StackPanel Background="{ThemeResource SystemControlAcrylicElementBrush}" Orientation="Vertical" Padding="10">
 
                             <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
@@ -106,9 +218,9 @@
                             </StackPanel>
 
                         </StackPanel>
-                    </Grid>
+                    </Grid>-->
 
-                    <Grid Style="{StaticResource gridTransition1}" x:Name="grid2" BorderThickness="3" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" Width="400" Margin="10">
+                    <!--<Grid Style="{StaticResource gridTransition1}" x:Name="grid2" BorderThickness="3" BorderBrush="{ThemeResource SystemControlBackgroundListMediumRevealBorderBrush}" Width="400" Margin="10">
                         <StackPanel Background="{ThemeResource SystemControlAcrylicElementBrush}" Orientation="Vertical" Padding="10">
 
                             <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
@@ -167,11 +279,17 @@
                             </StackPanel>
 
                         </StackPanel>
-                    </Grid>
+                    </Grid>-->
 
                 </StackPanel>
 
-                <Button x:Name="button" Style="{ThemeResource ButtonRevealStyle}" Height="40" Margin="10,50,10,10" HorizontalAlignment="Center" Visibility="Collapsed">
+                <!--<RelativePanel HorizontalAlignment="Center">
+                    <Grid RelativePanel.AlignTopWithPanel="True" Height="50" x:Name="w"/>
+                    
+                    <Grid RelativePanel.AlignTopWithPanel="True" Height="0" x:Name="ww"/>
+                </RelativePanel>-->
+
+                <Button x:Name="button" Style="{ThemeResource ButtonRevealStyle}" Height="40" Margin="10,55,10,10" HorizontalAlignment="Center" Visibility="Collapsed" RelativePanel.Below="w">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Margin="5,0,5,0">
                             <TextBlock Text="Conferma" FontSize="15" VerticalAlignment="Center"/>
@@ -180,7 +298,7 @@
                     </Button.Content>
                 </Button>
 
-                <RelativePanel x:Name="gridError2" Margin="10,50,50,10" HorizontalAlignment="Center" MinHeight="40">
+                <RelativePanel x:Name="gridError2" Margin="10,50,50,10" HorizontalAlignment="Center" MinHeight="45">
                     <Grid Width="80" Name="z" RelativePanel.AlignLeftWithPanel="True"/>
                     <Grid Style="{StaticResource gridTransition2}" x:Name="gridError" RelativePanel.RightOf="z">
                         <Grid.ColumnDefinitions>

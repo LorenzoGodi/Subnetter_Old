@@ -17,6 +17,9 @@ using Subnetter.SubnetterEngine.Operators;
 using Subnetter.Classes.XamlObjects;
 using Windows.UI.Xaml.Media.Animation;
 
+
+using Microsoft.Toolkit.Uwp.UI.Helpers;
+
 // Il modello di elemento Pagina vuota è documentato all'indirizzo https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace Subnetter.Pages.Subnetting
@@ -30,10 +33,32 @@ namespace Subnetter.Pages.Subnetting
 
         bool addressStatus = false;
         bool subnetStatus = false;
-
+        //public ThemeListener Listener { get; }
+        //private void Current_ThemeChanged(object sender, Models.ThemeChangedArgs e)
+        //{
+        //    UpdateThemeState();
+        //}
+        //private void ThemeListenerPage_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    UpdateThemeState();
+        //}
+        //private void Listener_ThemeChanged(ThemeListener sender)
+        //{
+        //    UpdateThemeState();
+        //}
+        //private void UpdateThemeState()
+        //{
+        //    //SystemTheme.Text = Listener.CurrentThemeName;
+        //    //CurrentTheme.Text = SampleController.Current.GetCurrentTheme().ToString();
+        //}
         public NewNetPage()
         {
+            this.RequestedTheme = ElementTheme.Dark;
             this.InitializeComponent();
+            //Listener = new ThemeListener();
+            //this.Loaded += ThemeListenerPage_Loaded;
+            //Listener.ThemeChanged += Listener_ThemeChanged;
+            //SampleController.Current.ThemeChanged += Current_ThemeChanged;
 
             //
 

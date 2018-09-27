@@ -115,6 +115,18 @@ namespace Subnetter.Subnetter_XamlTypeInfo
             {
                 xamlType = CreateXamlType(typeIndex);
             }
+            var userXamlType = xamlType as global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType;
+            if(xamlType == null || (userXamlType != null && userXamlType.IsReturnTypeStub && !userXamlType.IsLocalType))
+            {
+                global::Windows.UI.Xaml.Markup.IXamlType libXamlType = CheckOtherMetadataProvidersForType(type);
+                if (libXamlType != null)
+                {
+                    if(libXamlType.IsConstructible || xamlType == null)
+                    {
+                        xamlType = libXamlType;
+                    }
+                }
+            }
             if (xamlType != null)
             {
                 _xamlTypeCacheByName.Add(xamlType.FullName, xamlType);
@@ -138,6 +150,18 @@ namespace Subnetter.Subnetter_XamlTypeInfo
             if(typeIndex != -1)
             {
                 xamlType = CreateXamlType(typeIndex);
+            }
+            var userXamlType = xamlType as global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType;
+            if(xamlType == null || (userXamlType != null && userXamlType.IsReturnTypeStub && !userXamlType.IsLocalType))
+            {
+                global::Windows.UI.Xaml.Markup.IXamlType libXamlType = CheckOtherMetadataProvidersForName(typeName);
+                if (libXamlType != null)
+                {
+                    if(libXamlType.IsConstructible || xamlType == null)
+                    {
+                        xamlType = libXamlType;
+                    }
+                }
             }
             if (xamlType != null)
             {
@@ -180,21 +204,63 @@ namespace Subnetter.Subnetter_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[6];
+            _typeNameTable = new string[27];
             _typeNameTable[0] = "Subnetter.Pages.Initials.MainSubnetPage";
             _typeNameTable[1] = "Windows.UI.Xaml.Controls.Page";
             _typeNameTable[2] = "Windows.UI.Xaml.Controls.UserControl";
-            _typeNameTable[3] = "Subnetter.Pages.Initials.WelcomePage";
-            _typeNameTable[4] = "Subnetter.Pages.Subnetting.NewNetPage";
-            _typeNameTable[5] = "Subnetter.Pages.Subnetting.NewSubnetPage";
+            _typeNameTable[3] = "Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel";
+            _typeNameTable[4] = "Windows.UI.Xaml.Controls.ContentControl";
+            _typeNameTable[5] = "Double";
+            _typeNameTable[6] = "Windows.UI.Color";
+            _typeNameTable[7] = "System.ValueType";
+            _typeNameTable[8] = "Object";
+            _typeNameTable[9] = "Windows.UI.Composition.DropShadow";
+            _typeNameTable[10] = "Windows.UI.Composition.CompositionShadow";
+            _typeNameTable[11] = "Windows.UI.Composition.CompositionObject";
+            _typeNameTable[12] = "Windows.UI.Composition.CompositionBrush";
+            _typeNameTable[13] = "Subnetter.Pages.Initials.StartPage";
+            _typeNameTable[14] = "Subnetter.Pages.Initials.WelcomePage";
+            _typeNameTable[15] = "Subnetter.Pages.Subnetting.NewNetPage";
+            _typeNameTable[16] = "Subnetter.Pages.Subnetting.NewSubnetPage";
+            _typeNameTable[17] = "Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid";
+            _typeNameTable[18] = "Windows.UI.Xaml.Controls.Grid";
+            _typeNameTable[19] = "Windows.UI.Xaml.Controls.Panel";
+            _typeNameTable[20] = "Int32";
+            _typeNameTable[21] = "Windows.UI.Xaml.Controls.Orientation";
+            _typeNameTable[22] = "System.Nullable`1<Boolean>";
+            _typeNameTable[23] = "Windows.UI.Xaml.FrameworkElement";
+            _typeNameTable[24] = "Microsoft.Toolkit.Uwp.UI.Extensions.NullableBool";
+            _typeNameTable[25] = "Windows.UI.Xaml.Markup.MarkupExtension";
+            _typeNameTable[26] = "Boolean";
 
-            _typeTable = new global::System.Type[6];
+            _typeTable = new global::System.Type[27];
             _typeTable[0] = typeof(global::Subnetter.Pages.Initials.MainSubnetPage);
             _typeTable[1] = typeof(global::Windows.UI.Xaml.Controls.Page);
             _typeTable[2] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
-            _typeTable[3] = typeof(global::Subnetter.Pages.Initials.WelcomePage);
-            _typeTable[4] = typeof(global::Subnetter.Pages.Subnetting.NewNetPage);
-            _typeTable[5] = typeof(global::Subnetter.Pages.Subnetting.NewSubnetPage);
+            _typeTable[3] = typeof(global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel);
+            _typeTable[4] = typeof(global::Windows.UI.Xaml.Controls.ContentControl);
+            _typeTable[5] = typeof(global::System.Double);
+            _typeTable[6] = typeof(global::Windows.UI.Color);
+            _typeTable[7] = typeof(global::System.ValueType);
+            _typeTable[8] = typeof(global::System.Object);
+            _typeTable[9] = typeof(global::Windows.UI.Composition.DropShadow);
+            _typeTable[10] = typeof(global::Windows.UI.Composition.CompositionShadow);
+            _typeTable[11] = typeof(global::Windows.UI.Composition.CompositionObject);
+            _typeTable[12] = typeof(global::Windows.UI.Composition.CompositionBrush);
+            _typeTable[13] = typeof(global::Subnetter.Pages.Initials.StartPage);
+            _typeTable[14] = typeof(global::Subnetter.Pages.Initials.WelcomePage);
+            _typeTable[15] = typeof(global::Subnetter.Pages.Subnetting.NewNetPage);
+            _typeTable[16] = typeof(global::Subnetter.Pages.Subnetting.NewSubnetPage);
+            _typeTable[17] = typeof(global::Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid);
+            _typeTable[18] = typeof(global::Windows.UI.Xaml.Controls.Grid);
+            _typeTable[19] = typeof(global::Windows.UI.Xaml.Controls.Panel);
+            _typeTable[20] = typeof(global::System.Int32);
+            _typeTable[21] = typeof(global::Windows.UI.Xaml.Controls.Orientation);
+            _typeTable[22] = typeof(global::System.Nullable<global::System.Boolean>);
+            _typeTable[23] = typeof(global::Windows.UI.Xaml.FrameworkElement);
+            _typeTable[24] = typeof(global::Microsoft.Toolkit.Uwp.UI.Extensions.NullableBool);
+            _typeTable[25] = typeof(global::Windows.UI.Xaml.Markup.MarkupExtension);
+            _typeTable[26] = typeof(global::System.Boolean);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -230,9 +296,13 @@ namespace Subnetter.Subnetter_XamlTypeInfo
         }
 
         private object Activate_0_MainSubnetPage() { return new global::Subnetter.Pages.Initials.MainSubnetPage(); }
-        private object Activate_3_WelcomePage() { return new global::Subnetter.Pages.Initials.WelcomePage(); }
-        private object Activate_4_NewNetPage() { return new global::Subnetter.Pages.Subnetting.NewNetPage(); }
-        private object Activate_5_NewSubnetPage() { return new global::Subnetter.Pages.Subnetting.NewSubnetPage(); }
+        private object Activate_3_DropShadowPanel() { return new global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel(); }
+        private object Activate_13_StartPage() { return new global::Subnetter.Pages.Initials.StartPage(); }
+        private object Activate_14_WelcomePage() { return new global::Subnetter.Pages.Initials.WelcomePage(); }
+        private object Activate_15_NewNetPage() { return new global::Subnetter.Pages.Subnetting.NewNetPage(); }
+        private object Activate_16_NewSubnetPage() { return new global::Subnetter.Pages.Subnetting.NewSubnetPage(); }
+        private object Activate_17_UniformGrid() { return new global::Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid(); }
+        private object Activate_24_NullableBool() { return new global::Microsoft.Toolkit.Uwp.UI.Extensions.NullableBool(); }
 
         private global::Windows.UI.Xaml.Markup.IXamlType CreateXamlType(int typeIndex)
         {
@@ -259,36 +329,464 @@ namespace Subnetter.Subnetter_XamlTypeInfo
                 xamlType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 3:   //  Subnetter.Pages.Initials.WelcomePage
+            case 3:   //  Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.ContentControl"));
+                userType.Activator = Activate_3_DropShadowPanel;
+                userType.AddMemberName("BlurRadius");
+                userType.AddMemberName("ShadowOpacity");
+                userType.AddMemberName("OffsetX");
+                userType.AddMemberName("OffsetY");
+                userType.AddMemberName("Color");
+                userType.AddMemberName("DropShadow");
+                userType.AddMemberName("Mask");
+                userType.AddMemberName("OffsetZ");
+                xamlType = userType;
+                break;
+
+            case 4:   //  Windows.UI.Xaml.Controls.ContentControl
+                xamlType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 5:   //  Double
+                xamlType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 6:   //  Windows.UI.Color
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.ValueType"));
+                userType.SetIsReturnTypeStub();
+                xamlType = userType;
+                break;
+
+            case 7:   //  System.ValueType
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                xamlType = userType;
+                break;
+
+            case 8:   //  Object
+                xamlType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 9:   //  Windows.UI.Composition.DropShadow
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Composition.CompositionShadow"));
+                userType.SetIsReturnTypeStub();
+                xamlType = userType;
+                break;
+
+            case 10:   //  Windows.UI.Composition.CompositionShadow
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Composition.CompositionObject"));
+                xamlType = userType;
+                break;
+
+            case 11:   //  Windows.UI.Composition.CompositionObject
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                xamlType = userType;
+                break;
+
+            case 12:   //  Windows.UI.Composition.CompositionBrush
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Composition.CompositionObject"));
+                userType.SetIsReturnTypeStub();
+                xamlType = userType;
+                break;
+
+            case 13:   //  Subnetter.Pages.Initials.StartPage
                 userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_3_WelcomePage;
+                userType.Activator = Activate_13_StartPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 4:   //  Subnetter.Pages.Subnetting.NewNetPage
+            case 14:   //  Subnetter.Pages.Initials.WelcomePage
                 userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_4_NewNetPage;
+                userType.Activator = Activate_14_WelcomePage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 5:   //  Subnetter.Pages.Subnetting.NewSubnetPage
+            case 15:   //  Subnetter.Pages.Subnetting.NewNetPage
                 userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_5_NewSubnetPage;
+                userType.Activator = Activate_15_NewNetPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
+                break;
+
+            case 16:   //  Subnetter.Pages.Subnetting.NewSubnetPage
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_16_NewSubnetPage;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 17:   //  Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Grid"));
+                userType.Activator = Activate_17_UniformGrid;
+                userType.AddMemberName("Columns");
+                userType.AddMemberName("FirstColumn");
+                userType.AddMemberName("Orientation");
+                userType.AddMemberName("Rows");
+                userType.AddMemberName("AutoLayout");
+                userType.SetIsBindable();
+                xamlType = userType;
+                break;
+
+            case 18:   //  Windows.UI.Xaml.Controls.Grid
+                xamlType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 19:   //  Windows.UI.Xaml.Controls.Panel
+                xamlType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 20:   //  Int32
+                xamlType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 21:   //  Windows.UI.Xaml.Controls.Orientation
+                xamlType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 22:   //  System.Nullable`1<Boolean>
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.ValueType"));
+                userType.SetIsReturnTypeStub();
+                xamlType = userType;
+                break;
+
+            case 23:   //  Windows.UI.Xaml.FrameworkElement
+                xamlType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 24:   //  Microsoft.Toolkit.Uwp.UI.Extensions.NullableBool
+                userType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Markup.MarkupExtension"));
+                userType.Activator = Activate_24_NullableBool;
+                userType.AddMemberName("Value");
+                userType.AddMemberName("IsNull");
+                userType.SetIsBindable();
+                userType.SetIsMarkupExtension();
+                xamlType = userType;
+                break;
+
+            case 25:   //  Windows.UI.Xaml.Markup.MarkupExtension
+                xamlType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 26:   //  Boolean
+                xamlType = new global::Subnetter.Subnetter_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
             }
             return xamlType;
         }
 
+        private global::System.Collections.Generic.List<global::Windows.UI.Xaml.Markup.IXamlMetadataProvider> _otherProviders;
+        private global::System.Collections.Generic.List<global::Windows.UI.Xaml.Markup.IXamlMetadataProvider> OtherProviders
+        {
+            get
+            {
+                if(_otherProviders == null)
+                {
+                    var otherProviders = new global::System.Collections.Generic.List<global::Windows.UI.Xaml.Markup.IXamlMetadataProvider>();
+                    global::Windows.UI.Xaml.Markup.IXamlMetadataProvider provider;
+                    provider = new global::Microsoft.Toolkit.Uwp.UI.Controls.Microsoft_Toolkit_Uwp_UI_Controls_XamlTypeInfo.XamlMetaDataProvider() as global::Windows.UI.Xaml.Markup.IXamlMetadataProvider;
+                    otherProviders.Add(provider); 
+                    provider = new global::Microsoft.Toolkit.Uwp.UI.Microsoft_Toolkit_Uwp_UI_XamlTypeInfo.XamlMetaDataProvider() as global::Windows.UI.Xaml.Markup.IXamlMetadataProvider;
+                    otherProviders.Add(provider); 
+                    _otherProviders = otherProviders;
+                }
+                return _otherProviders;
+            }
+        }
 
+        private global::Windows.UI.Xaml.Markup.IXamlType CheckOtherMetadataProvidersForName(string typeName)
+        {
+            global::Windows.UI.Xaml.Markup.IXamlType xamlType = null;
+            global::Windows.UI.Xaml.Markup.IXamlType foundXamlType = null;
+            foreach(global::Windows.UI.Xaml.Markup.IXamlMetadataProvider xmp in OtherProviders)
+            {
+                xamlType = xmp.GetXamlType(typeName);
+                if(xamlType != null)
+                {
+                    if(xamlType.IsConstructible)    // not Constructible means it might be a Return Type Stub
+                    {
+                        return xamlType;
+                    }
+                    foundXamlType = xamlType;
+                }
+            }
+            return foundXamlType;
+        }
+
+        private global::Windows.UI.Xaml.Markup.IXamlType CheckOtherMetadataProvidersForType(global::System.Type type)
+        {
+            global::Windows.UI.Xaml.Markup.IXamlType xamlType = null;
+            global::Windows.UI.Xaml.Markup.IXamlType foundXamlType = null;
+            foreach(global::Windows.UI.Xaml.Markup.IXamlMetadataProvider xmp in OtherProviders)
+            {
+                xamlType = xmp.GetXamlType(type);
+                if(xamlType != null)
+                {
+                    if(xamlType.IsConstructible)    // not Constructible means it might be a Return Type Stub
+                    {
+                        return xamlType;
+                    }
+                    foundXamlType = xamlType;
+                }
+            }
+            return foundXamlType;
+        }
+
+        private object get_0_DropShadowPanel_BlurRadius(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            return that.BlurRadius;
+        }
+        private void set_0_DropShadowPanel_BlurRadius(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            that.BlurRadius = (global::System.Double)Value;
+        }
+        private object get_1_DropShadowPanel_ShadowOpacity(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            return that.ShadowOpacity;
+        }
+        private void set_1_DropShadowPanel_ShadowOpacity(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            that.ShadowOpacity = (global::System.Double)Value;
+        }
+        private object get_2_DropShadowPanel_OffsetX(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            return that.OffsetX;
+        }
+        private void set_2_DropShadowPanel_OffsetX(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            that.OffsetX = (global::System.Double)Value;
+        }
+        private object get_3_DropShadowPanel_OffsetY(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            return that.OffsetY;
+        }
+        private void set_3_DropShadowPanel_OffsetY(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            that.OffsetY = (global::System.Double)Value;
+        }
+        private object get_4_DropShadowPanel_Color(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            return that.Color;
+        }
+        private void set_4_DropShadowPanel_Color(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            that.Color = (global::Windows.UI.Color)Value;
+        }
+        private object get_5_DropShadowPanel_DropShadow(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            return that.DropShadow;
+        }
+        private object get_6_DropShadowPanel_Mask(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            return that.Mask;
+        }
+        private void set_6_DropShadowPanel_Mask(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            that.Mask = (global::Windows.UI.Composition.CompositionBrush)Value;
+        }
+        private object get_7_DropShadowPanel_OffsetZ(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            return that.OffsetZ;
+        }
+        private void set_7_DropShadowPanel_OffsetZ(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel)instance;
+            that.OffsetZ = (global::System.Double)Value;
+        }
+        private object get_8_UniformGrid_Columns(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid)instance;
+            return that.Columns;
+        }
+        private void set_8_UniformGrid_Columns(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid)instance;
+            that.Columns = (global::System.Int32)Value;
+        }
+        private object get_9_UniformGrid_FirstColumn(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid)instance;
+            return that.FirstColumn;
+        }
+        private void set_9_UniformGrid_FirstColumn(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid)instance;
+            that.FirstColumn = (global::System.Int32)Value;
+        }
+        private object get_10_UniformGrid_Orientation(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid)instance;
+            return that.Orientation;
+        }
+        private void set_10_UniformGrid_Orientation(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid)instance;
+            that.Orientation = (global::Windows.UI.Xaml.Controls.Orientation)Value;
+        }
+        private object get_11_UniformGrid_Rows(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid)instance;
+            return that.Rows;
+        }
+        private void set_11_UniformGrid_Rows(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid)instance;
+            that.Rows = (global::System.Int32)Value;
+        }
+        private object get_12_UniformGrid_AutoLayout(object instance)
+        {
+            return global::Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid.GetAutoLayout((global::Windows.UI.Xaml.FrameworkElement)instance);
+        }
+        private void set_12_UniformGrid_AutoLayout(object instance, object Value)
+        {
+            global::Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid.SetAutoLayout((global::Windows.UI.Xaml.FrameworkElement)instance, (global::System.Nullable<global::System.Boolean>)Value);
+        }
+        private object get_13_NullableBool_Value(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Extensions.NullableBool)instance;
+            return that.Value;
+        }
+        private void set_13_NullableBool_Value(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Extensions.NullableBool)instance;
+            that.Value = (global::System.Boolean)Value;
+        }
+        private object get_14_NullableBool_IsNull(object instance)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Extensions.NullableBool)instance;
+            return that.IsNull;
+        }
+        private void set_14_NullableBool_IsNull(object instance, object Value)
+        {
+            var that = (global::Microsoft.Toolkit.Uwp.UI.Extensions.NullableBool)instance;
+            that.IsNull = (global::System.Boolean)Value;
+        }
 
         private global::Windows.UI.Xaml.Markup.IXamlMember CreateXamlMember(string longMemberName)
         {
             global::Subnetter.Subnetter_XamlTypeInfo.XamlMember xamlMember = null;
-            // No Local Properties
+            global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType userType;
+
+            switch (longMemberName)
+            {
+            case "Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel.BlurRadius":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "BlurRadius", "Double");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_0_DropShadowPanel_BlurRadius;
+                xamlMember.Setter = set_0_DropShadowPanel_BlurRadius;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel.ShadowOpacity":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "ShadowOpacity", "Double");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_1_DropShadowPanel_ShadowOpacity;
+                xamlMember.Setter = set_1_DropShadowPanel_ShadowOpacity;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel.OffsetX":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "OffsetX", "Double");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_2_DropShadowPanel_OffsetX;
+                xamlMember.Setter = set_2_DropShadowPanel_OffsetX;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel.OffsetY":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "OffsetY", "Double");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_3_DropShadowPanel_OffsetY;
+                xamlMember.Setter = set_3_DropShadowPanel_OffsetY;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel.Color":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "Color", "Windows.UI.Color");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_4_DropShadowPanel_Color;
+                xamlMember.Setter = set_4_DropShadowPanel_Color;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel.DropShadow":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "DropShadow", "Windows.UI.Composition.DropShadow");
+                xamlMember.Getter = get_5_DropShadowPanel_DropShadow;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel.Mask":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "Mask", "Windows.UI.Composition.CompositionBrush");
+                xamlMember.Getter = get_6_DropShadowPanel_Mask;
+                xamlMember.Setter = set_6_DropShadowPanel_Mask;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel.OffsetZ":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.DropShadowPanel");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "OffsetZ", "Double");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_7_DropShadowPanel_OffsetZ;
+                xamlMember.Setter = set_7_DropShadowPanel_OffsetZ;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid.Columns":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "Columns", "Int32");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_8_UniformGrid_Columns;
+                xamlMember.Setter = set_8_UniformGrid_Columns;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid.FirstColumn":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "FirstColumn", "Int32");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_9_UniformGrid_FirstColumn;
+                xamlMember.Setter = set_9_UniformGrid_FirstColumn;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid.Orientation":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "Orientation", "Windows.UI.Xaml.Controls.Orientation");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_10_UniformGrid_Orientation;
+                xamlMember.Setter = set_10_UniformGrid_Orientation;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid.Rows":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "Rows", "Int32");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.Getter = get_11_UniformGrid_Rows;
+                xamlMember.Setter = set_11_UniformGrid_Rows;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid.AutoLayout":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Controls.UniformGrid");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "AutoLayout", "System.Nullable`1<Boolean>");
+                xamlMember.SetTargetTypeName("Windows.UI.Xaml.FrameworkElement");
+                xamlMember.SetIsDependencyProperty();
+                xamlMember.SetIsAttachable();
+                xamlMember.Getter = get_12_UniformGrid_AutoLayout;
+                xamlMember.Setter = set_12_UniformGrid_AutoLayout;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Extensions.NullableBool.Value":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Extensions.NullableBool");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "Value", "Boolean");
+                xamlMember.Getter = get_13_NullableBool_Value;
+                xamlMember.Setter = set_13_NullableBool_Value;
+                break;
+            case "Microsoft.Toolkit.Uwp.UI.Extensions.NullableBool.IsNull":
+                userType = (global::Subnetter.Subnetter_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Toolkit.Uwp.UI.Extensions.NullableBool");
+                xamlMember = new global::Subnetter.Subnetter_XamlTypeInfo.XamlMember(this, "IsNull", "Boolean");
+                xamlMember.Getter = get_14_NullableBool_IsNull;
+                xamlMember.Setter = set_14_NullableBool_IsNull;
+                break;
+            }
             return xamlMember;
         }
     }

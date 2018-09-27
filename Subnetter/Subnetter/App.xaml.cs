@@ -30,6 +30,7 @@ namespace Subnetter
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            SubnetterEngine.Objects.Address a = new SubnetterEngine.Objects.Address("192.168.0.0", 16);
         }
 
         /// <summary>

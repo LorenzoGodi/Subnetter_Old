@@ -12,11 +12,43 @@ namespace Subnetter.SubnetterEngine.Operators
         /// Rimuove i punti '.' contenuti in un indirizzo
         /// </summary>
         public static string RemovePoints(string address) => address.Replace(".", "");
-        
+
         /// <summary>
         /// Aggiunge i punti a un idirizzo in base binaria dividendo in gruppi da 8 bit
         /// </summary>
         public static string AddPoints(string address) => address.Substring(0, 8) + "." + address.Substring(8, 8) + "." + address.Substring(16, 8) + "." + address.Substring(24, 8);
+
+        /// <summary>
+        /// Aggiunge i punti a un idirizzo in base binaria [diviso in parti di una lista] dividendo in gruppi da 8 bit
+        /// </summary>
+        public static List<string> AddPointsToParts(List<string> addressParts)
+        {
+            int[] divisori = { 8, 17, 26 };
+            List<string> result = new List<string>();
+
+            int pointer = 0;
+            for(int part = 0; part < addressParts.Count; part++)
+            {
+                // Per ogni parte di lista
+                string newPart = "";
+                for(int chr_part = 0; chr_part < addressParts[part].Length; chr_part++)
+                {
+                    // Per ogni carattere della parte
+                    if (divisori.Contains(pointer))
+                    {
+                        if (chr_part > 0)
+                            newPart += ".";
+                        else
+                            result.Add(".");
+                        pointer++;
+                    }
+                    newPart += addressParts[part][chr_part];
+                    pointer++;
+                }
+                result.Add(newPart);
+            }
+            return result;
+        }
 
         /// <summary>
         /// Divide un indirizzo nelle quattro parti divise da un punto

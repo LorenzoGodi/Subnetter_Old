@@ -11,7 +11,6 @@ namespace Subnetter.Classes.XamlObjects
     {
         public static StackPanel ColoredBinaryView()
         {
-            return null;
         }
     }
 }
